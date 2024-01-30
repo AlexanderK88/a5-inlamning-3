@@ -521,3 +521,65 @@ main {
   font-size: 1.5rem;
   margin: 20px 0;
 }
+
+.review {
+  width: 30vw;
+  height: fit-content;
+  min-height: 30vh;
+  border: 1px solid #ffffff;
+}
+.review div {
+  height: 2rem;
+  width: 100%;
+}
+.review div input {
+  border-radius: 5px;
+  border: 0;
+}
+.review__rating {
+  display: flex;
+  flex-direction: row;
+  margin-left: 10px;
+  margin-bottom: 5px;
+}
+.review__rating span {
+  display: block;
+  width: 20px;
+  height: 20px;
+  background-image: url("../static/assets/film-solid-empty.svg");
+  margin: 8px 5px;
+  fill: #404040;
+}
+.review__rating span:hover {
+  opacity: 0.7;
+}
+.review__rating--wrapper {
+  display: flex;
+  flex-direction: row;
+  border: 1px solid white;
+}
+.review .review__rating[aria-valuenow="1"] span:nth-child(1),
+.review .review__rating[aria-valuenow="2"] span:nth-child(-n+2),
+.review .review__rating[aria-valuenow="3"] span:nth-child(-n+3),
+.review .review__rating[aria-valuenow="4"] span:nth-child(-n+4),
+.review .review__rating[aria-valuenow="5"] span:nth-child(-n+5) {
+  background-image: url("../static/assets/film-solid-rated.svg");
+}
+.review__title {
+  display: flex;
+  background-color: #800020;
+  border: 1px solid #ffffff;
+  justify-content: left;
+  align-items: center;
+  margin: auto;
+  color: #ffffff;
+}
+.review label {
+  color: #ffffff;
+}
+.review #reviewMsg {
+  height: 15vh;
+}
+.review input {
+  margin: 0.5rem;
+}

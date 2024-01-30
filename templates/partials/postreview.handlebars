@@ -1,0 +1,44 @@
+<section class="review">
+  <div class="review__title"><p>Add a review for {{movie.title}}</p></div>
+  <form action="" method="post" class="review__form">
+    <div>
+      <input type="text" name="name" id="reviewName" />
+      <label for="name">Your name</label>
+    </div>
+    <div class="review__rating--wrapper">
+      <div
+        class="review__rating"
+        aria-label="Rating"
+        role="meter"
+        aria-valuemin="0"
+        aria-valuemax="5"
+        aria-valuenow="1"
+      >
+        <span aria-hidden="true" class="movieGrade" id="mg-1"></span>
+        <span aria-hidden="true" class="movieGrade" id="mg-2"></span>
+        <span aria-hidden="true" class="movieGrade" id="mg-3"></span>
+        <span aria-hidden="true" class="movieGrade" id="mg-4"></span>
+        <span aria-hidden="true" class="movieGrade" id="mg-5"></span>
+      </div>
+      <label for="review__rating">Grade</label>
+    </div>
+
+    <div>
+      <input type="text" name="msg" id="reviewMsg" />
+      <label for="msg">What did you think?</label>
+    </div>
+  </form>
+</section>
+
+<script>
+  document.querySelectorAll('.movieGrade').forEach(span => {
+    span.addEventListener('click', function() {
+        // Get the index of the clicked span
+        let index = Array.from(this.parentElement.children).indexOf(this) + 1;
+
+        // Set the aria-valuenow attribute to the index
+        this.parentElement.setAttribute('aria-valuenow', index);
+    });
+});
+
+</script>
