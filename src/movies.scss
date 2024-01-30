@@ -1,0 +1,23 @@
+.movieContainer {
+  background-color: $colorTwo;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  & h1 {
+    color: $colorFive;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  &__movieLink {
+    color: $colorFive;
+    font-size: 1.2rem;
+    list-style: none;
+  }
+
+  & a {
+    color: $colorFive;
+  }
+}

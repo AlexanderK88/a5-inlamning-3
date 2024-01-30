@@ -1,0 +1,67 @@
+<html class="html">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Kino Göteborg</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/static/main.css" />
+    <script src="/static/menu.js" type="module" defer></script>
+    <script src="/static/newsEvents.js" type="module" defer></script>
+  </head>
+  <body>
+    <header class="header">
+      <div class="header__container">
+        <a href="/"><img
+            src="../static/assets/headerLogo.png"
+            alt="Header Logo"
+            class="header__logo"
+          /></a>
+        <nav class="header__topNavigation">
+          {{#each menuLink}}
+            <a href="{{this.link}}" class="header__link">{{this.label}}</a>
+          {{/each}}
+        </nav>
+        <img src="../static/assets/hamburgerButtonOpen.png" class="header__hamburgerButtonOpen" />
+      </div>
+      <nav class="header__hamburgerMenuContainer">
+        <div class="header__hamburgerMenu">
+          {{#each menuLink}}
+            <a href="{{this.link}}" class="header__link">{{this.label}}</a>
+          {{/each}}
+          <img
+            src="../static/assets/hamburgerButtonClose.png"
+            class="header__hamburgerCloseButton"
+            alt="Hamburger menu close button"
+          />
+        </div>
+      </nav>
+    </header>
+    <main>
+      {{{body}}}
+    </main>
+    <footer class="footer">
+      <div class="footer__container">
+        <div class="footer_logoContainer">
+          <a href="/"><img
+              src="../static/assets/footerLogo.png"
+              alt="Footer Logo"
+              class="footer__logo"
+            /></a>
+        </div>
+        <div class="footer__firstContainer">
+          <h3 class="footer__heading">Kino Göteborg</h3>
+          <p class="footer__text">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc laoreet, nisl id consequat
+            tempor, erat dui rhoncus nisl, vel pretium lacus enim vitae ligula.
+          </p>
+        </div>
+        <div class="footer__secondContainer">
+          <h3 class="footer__heading">Navigation</h3>
+          {{#each menuLink}}
+            <a href="{{this.link}}" class="footer__link">{{this.label}}</a>
+          {{/each}}
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

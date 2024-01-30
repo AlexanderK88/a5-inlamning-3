@@ -1,0 +1,30 @@
+.movieInformation {
+  background-color: $colorTwo;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  color: $colorFive;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 100px 0;
+    max-width: 400px;
+  }
+
+  &__img {
+    width: 350px;
+    margin: 20px 0;
+  }
+
+  &__link {
+    color: $colorFour;
+    text-decoration: underline;
+    font-size: 1.5rem;
+    margin: 20px 0;
+  }
+}
