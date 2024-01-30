@@ -3,9 +3,11 @@
   height: fit-content;
   min-height: 30vh;
   border: 1px solid $colorFive;
+  border-radius: 5px;
+  margin: 2rem auto;
   div {
-    height: 2rem;
-    width: 100%;
+    // height: 2rem;
+    // width: 100%;
     input {
       border-radius: 5px;
       border: 0;
@@ -55,10 +57,26 @@
   label {
     color: $colorFive;
   }
-  #reviewMsg {
+
+  &__message {
     height: 15vh;
+    #reviewMsg {
+      height: 80%;
+    }
   }
   input {
     margin: 0.5rem;
+  }
+  &__post {
+    margin: 5px 1rem;
+    button {
+      width: fit-content;
+      height: 2rem;
+      border-radius: 5px;
+      border: 0;
+      font-size: large;
+      font-weight: 700;
+      padding: 3px;
+    }
   }
 }

@@ -23,15 +23,19 @@
       <label for="review__rating">Grade</label>
     </div>
 
-    <div>
+    <div class="review__message">
       <input type="text" name="msg" id="reviewMsg" />
       <label for="msg">What did you think?</label>
     </div>
   </form>
+  <div class="review__post">
+    <button id="postBtn">Post review</button>
+  </div>
+  
 </section>
 
 <script>
-  document.querySelectorAll('.movieGrade').forEach(span => {
+document.querySelectorAll('.movieGrade').forEach(span => {
     span.addEventListener('click', function() {
         // Get the index of the clicked span
         let index = Array.from(this.parentElement.children).indexOf(this) + 1;
@@ -41,4 +45,27 @@
     });
 });
 
+const postBtn = document.querySelector("#postBtn");
+
+
+
+postBtn.addEventListener('click', () => {
+
+const reviewComment = document.querySelector('#reviewMsg');
+const ratingElement = document.querySelector('.review__rating');
+const rating = ratingElement.getAttribute('aria-valuenow');
+const nameOfAuthor = document.querySelector('#reviewName');
+const verified = false;
+// Get the current date
+const currentDate = new Date();
+
+// Convert the current date to Swedish time (Central European Time, CET, or Central European Summer Time, CEST)
+const options = { timeZone: 'Europe/Stockholm' };
+const swedishDate = currentDate.toLocaleString('sv-SE', options);
+const movieId = {{movie.id}}
+const msgToPost = JSON.stringify(`data:{ id: ${movieId}, attributes: {comment: ${reviewComment.value}, rating: ${rating}, author: ${nameOfAuthor.value}, verified: ${verified}, createdAt: ${swedishDate}, updatedAt: ${swedishDate}}, meta: {}`)
+
+    console.log(msgToPost);
+    console.log("test")
+    });
 </script>

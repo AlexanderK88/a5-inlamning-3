@@ -64,8 +64,11 @@ GET för att hämta alla recensioner, med följande relevanta querystring-parame
 filters[movie]=X för att hämta recensioner för film med id X
 pagination[page]=X för sida X
 pagination[pageSize]=X för X recensioner per sida
+
 POST för att lägga till recension
 https://plankton-app-xhkom.ondigitalocean.app/api/reviews/1 (etc)
+
+
 Screenings
 En resurs är relevant för filmvisningar.
 
