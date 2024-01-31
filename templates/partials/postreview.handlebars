@@ -1,3 +1,5 @@
+
+
 <section class="review">
   <div class="review__title"><p>Add a review for {{movie.title}}</p></div>
   <form action="" method="post" class="review__form">
@@ -39,7 +41,6 @@ document.querySelectorAll('.movieGrade').forEach(span => {
     span.addEventListener('click', function() {
         // Get the index of the clicked span
         let index = Array.from(this.parentElement.children).indexOf(this) + 1;
-
         // Set the aria-valuenow attribute to the index
         this.parentElement.setAttribute('aria-valuenow', index);
     });
@@ -48,24 +49,23 @@ document.querySelectorAll('.movieGrade').forEach(span => {
 const postBtn = document.querySelector("#postBtn");
 
 
+postBtn.addEventListener('click', async () => {
+    const reviewComment = document.querySelector('#reviewMsg').value;
+    const ratingElement = document.querySelector('.review__rating');
+    const rating = ratingElement.getAttribute('aria-valuenow');
+    const nameOfAuthor = document.querySelector('#reviewName').value;
+    const movieId = {{movie.id}};
 
-postBtn.addEventListener('click', () => {
+const data = new URLSearchParams();
+data.append('id', movieId);
+data.append('comment', reviewComment);
+data.append('rating', rating);
+data.append('author', nameOfAuthor);
 
-const reviewComment = document.querySelector('#reviewMsg');
-const ratingElement = document.querySelector('.review__rating');
-const rating = ratingElement.getAttribute('aria-valuenow');
-const nameOfAuthor = document.querySelector('#reviewName');
-const verified = false;
-// Get the current date
-const currentDate = new Date();
 
-// Convert the current date to Swedish time (Central European Time, CET, or Central European Summer Time, CEST)
-const options = { timeZone: 'Europe/Stockholm' };
-const swedishDate = currentDate.toLocaleString('sv-SE', options);
-const movieId = {{movie.id}}
-const msgToPost = JSON.stringify(`data:{ id: ${movieId}, attributes: {comment: ${reviewComment.value}, rating: ${rating}, author: ${nameOfAuthor.value}, verified: ${verified}, createdAt: ${swedishDate}, updatedAt: ${swedishDate}}, meta: {}`)
-
-    console.log(msgToPost);
-    console.log("test")
-    });
+const response = await fetch('/review', {
+    method: 'POST',
+    body: data
+});
+});
 </script>
