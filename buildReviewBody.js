@@ -5,7 +5,7 @@ export function builder(attributes) {
       comment: "string",
       rating: 0,
       author: "string",
-      verified: true,
+      verified: false,
       movie: "string or id",
       createdAt: date,
       updatedAt: date,

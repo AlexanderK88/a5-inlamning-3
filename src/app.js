@@ -10,8 +10,6 @@ app.set("view engine", "handlebars");
 app.set("views", "./templates");
 
 //used for POST request.
-import fs from "fs/promises";
-import path from "path";
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -70,10 +68,6 @@ app.post("/review", (request, response) => {
     createdBy: author,
     updatedBy: "nil",
   };
-
-  console.log("builder:", builder(request.body));
-  console.log("======");
-  // response.status(200).send("Review received");
 
   // Convert the JavaScript object to a JSON string
   const jsonData = JSON.stringify(builder(reviewAttributes)) + "\n";
