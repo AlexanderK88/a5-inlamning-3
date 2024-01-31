@@ -22,3 +22,12 @@ export async function getMovie(id) {
     ...payload.data.attributes,
   };
 }
+
+export async function getMovieScreenings(id) {
+  const res = await fetch(`${API_BASE}/screenings?filters[movie]=${id}`);
+  const payload = await res.json();
+  return payload.data.map((screening) => ({
+    id: screening.id,
+    ...screening.attributes,
+  }));
+}
