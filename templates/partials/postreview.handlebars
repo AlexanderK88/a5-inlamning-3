@@ -1,10 +1,15 @@
 
 
 <section class="review">
+  <div class="review__login">
+    <input type="text" name="username" placeholder="Enter Username" id="username">
+    <input type="text" name="password" placeholder="Enter Password" id="password">
+    <button id="loginBtn">Login</button>
+  </div>
   <div class="review__title"><p>Add a review for {{movie.title}}</p></div>
-  <form action="" method="post" class="review__form">
+<form action="/movies/:movieId/test" method="post" class="review__form" id="reviewForm">
     <div>
-      <input type="text" name="name" id="reviewName" />
+      <input type="text" name="name" id="reviewName" required/>
       <label for="name">Your name</label>
     </div>
     <div class="review__rating--wrapper">
@@ -14,7 +19,7 @@
         role="meter"
         aria-valuemin="0"
         aria-valuemax="5"
-        aria-valuenow="1"
+        aria-valuenow="0"
       >
         <span aria-hidden="true" class="movieGrade" id="mg-1"></span>
         <span aria-hidden="true" class="movieGrade" id="mg-2"></span>
@@ -26,13 +31,13 @@
     </div>
 
     <div class="review__message">
-      <input type="text" name="msg" id="reviewMsg" />
+      <textarea type="text" name="msg" id="reviewMsg" required /></textarea>
       <label for="msg">What did you think?</label>
     </div>
-  </form>
   <div class="review__post">
-    <button id="postBtn">Post review</button>
+    <button id="postBtn">Post review btn</button>
   </div>
+  </form>
   
 </section>
 
@@ -47,14 +52,19 @@ document.querySelectorAll('.movieGrade').forEach(span => {
 });
 
 const postBtn = document.querySelector("#postBtn");
+const reviewForm = document.getElementById("reviewForm");
 
 
-postBtn.addEventListener('click', async () => {
+reviewForm.addEventListener('submit', async () => {
+  event.preventDefault();
     const reviewComment = document.querySelector('#reviewMsg').value;
+    let revcom = reviewComment;
     const ratingElement = document.querySelector('.review__rating');
     const rating = ratingElement.getAttribute('aria-valuenow');
     const nameOfAuthor = document.querySelector('#reviewName').value;
+    let noa = document.querySelector('#reviewName');
     const movieId = {{movie.id}};
+
 
 const data = new URLSearchParams();
 data.append('id', movieId);
@@ -62,10 +72,12 @@ data.append('comment', reviewComment);
 data.append('rating', rating);
 data.append('author', nameOfAuthor);
 
+console.log(data.toString());
 
-const response = await fetch('/review', {
+
+const response = await fetch('/movies/:movieId/test', {
     method: 'POST',
     body: data
-});
+  });
 });
 </script>
