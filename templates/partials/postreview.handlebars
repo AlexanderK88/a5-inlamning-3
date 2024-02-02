@@ -1,0 +1,85 @@
+
+
+<section class="review">
+  <div class="review__login" style="display: none;">
+    <input type="text" name="username" placeholder="Enter Username" id="username">
+    <input type="text" name="password" placeholder="Enter Password" id="password">
+    <button id="loginBtn">Login</button>
+  </div>
+  <div class="review__title"><p>Add a review for {{movie.title}}</p></div>
+{{!-- <form action="/movies/:movieId/test" method="post" class="review__form" id="reviewForm"> --}}
+<form method="post" class="review__form" id="reviewForm">
+    <div>
+      <input type="text" name="name" id="reviewName" required/>
+      <label for="name">Your name</label>
+    </div>
+    <div class="review__rating--wrapper">
+      <div
+        class="review__rating"
+        aria-label="Rating"
+        role="meter"
+        aria-valuemin="0"
+        aria-valuemax="5"
+        aria-valuenow="0"
+      >
+        <span aria-hidden="true" class="movieGrade" id="mg-1"></span>
+        <span aria-hidden="true" class="movieGrade" id="mg-2"></span>
+        <span aria-hidden="true" class="movieGrade" id="mg-3"></span>
+        <span aria-hidden="true" class="movieGrade" id="mg-4"></span>
+        <span aria-hidden="true" class="movieGrade" id="mg-5"></span>
+      </div>
+      <label for="review__rating">Grade</label>
+    </div>
+
+    <div class="review__message">
+      <textarea type="text" name="msg" id="reviewMsg" required /></textarea>
+      <label for="msg">What did you think?</label>
+    </div>
+  <div class="review__post">
+    <button id="postBtn">Post review btn</button>
+  </div>
+  </form>
+  
+</section>
+
+<script>
+document.querySelectorAll('.movieGrade').forEach(span => {
+    span.addEventListener('click', function() {
+        // Get the index of the clicked span
+        let index = Array.from(this.parentElement.children).indexOf(this) + 1;
+        // Set the aria-valuenow attribute to the index
+        this.parentElement.setAttribute('aria-valuenow', index);
+    });
+});
+
+const postBtn = document.querySelector("#postBtn");
+const reviewForm = document.getElementById("reviewForm");
+
+
+reviewForm.addEventListener('submit', async () => {
+  event.preventDefault();
+    const reviewComment = document.querySelector('#reviewMsg').value;
+    let revcom = reviewComment;
+    const ratingElement = document.querySelector('.review__rating');
+    const rating = ratingElement.getAttribute('aria-valuenow');
+    const nameOfAuthor = document.querySelector('#reviewName').value;
+    let noa = document.querySelector('#reviewName');
+    const movieId = {{movie.id}};
+
+
+const data = new URLSearchParams();
+data.append('id', movieId);
+data.append('comment', reviewComment);
+data.append('rating', rating);
+data.append('author', nameOfAuthor);
+
+console.log(data.toString());
+
+
+const response = await fetch('/movies/:movieId/review', {
+    method: 'POST',
+    body: data
+  });
+
+});
+</script>
