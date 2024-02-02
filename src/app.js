@@ -70,31 +70,33 @@ app.post("/movies/:movieId/review", (request, response) => {
     updatedBy: "nil",
   };
 
-  // Convert the JavaScript object to a JSON string
-  const jsonData = JSON.stringify(builder(reviewAttributes)) + "\n";
+  if (comment.length > 3 && author.length > 3) {
+    // Convert the JavaScript object to a JSON string
+    const jsonData = JSON.stringify(builder(reviewAttributes)) + "\n";
 
-  const fetchUrl = `https://plankton-app-xhkom.ondigitalocean.app/api/reviews`;
-  fetch(fetchUrl, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: jsonData,
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Failed to write data to database");
-      }
-      return response.json();
+    const fetchUrl = `https://plankton-app-xhkom.ondigitalocean.app/api/reviews`;
+    fetch(fetchUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: jsonData,
     })
-    .then((data) => {
-      console.log("Data written to database:", data);
-      response.status(201).send("Data written to database");
-    })
-    .catch((error) => {
-      console.error("Error writing to database:", error.message);
-      response.status(500).send("Error writing to database");
-    });
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to write data to database");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Data written to database:", data);
+        response.status(201).send("Data written to database");
+      })
+      .catch((error) => {
+        console.error("Error writing to database:", error.message);
+        response.status(500).send("Error writing to database");
+      });
+  }
 });
 
 //Test POST to local review.json

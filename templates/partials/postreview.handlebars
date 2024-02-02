@@ -1,13 +1,14 @@
 
 
 <section class="review">
-  <div class="review__login">
+  <div class="review__login" style="display: none;">
     <input type="text" name="username" placeholder="Enter Username" id="username">
     <input type="text" name="password" placeholder="Enter Password" id="password">
     <button id="loginBtn">Login</button>
   </div>
   <div class="review__title"><p>Add a review for {{movie.title}}</p></div>
-<form action="/movies/:movieId/test" method="post" class="review__form" id="reviewForm">
+{{!-- <form action="/movies/:movieId/test" method="post" class="review__form" id="reviewForm"> --}}
+<form method="post" class="review__form" id="reviewForm">
     <div>
       <input type="text" name="name" id="reviewName" required/>
       <label for="name">Your name</label>
@@ -75,9 +76,10 @@ data.append('author', nameOfAuthor);
 console.log(data.toString());
 
 
-const response = await fetch('/movies/:movieId/test', {
+const response = await fetch('/movies/:movieId/review', {
     method: 'POST',
     body: data
   });
+
 });
 </script>
