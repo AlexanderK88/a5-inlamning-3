@@ -18,7 +18,16 @@ function renderMovieScreenings(movieScreenings) {
     const time = new Intl.DateTimeFormat("default", timeOptions).format(date);
     const formattedDate = new Intl.DateTimeFormat("default", dateOptions).format(date);
 
-    listItem.innerHTML = `Theater: ${screening.room}<br>Start time: ${time}, ${formattedDate}`;
+    let theaterText = document.createElement("p");
+    theaterText.textContent = `Theater: ${screening.room}`;
+    theaterText.classList.add("movieInformation__theater");
+    listItem.appendChild(theaterText);
+
+    let timeText = document.createElement("p");
+    timeText.textContent = `Start time: ${time}, ${formattedDate}`;
+    timeText.classList.add("movieInformation__startTime");
+    listItem.appendChild(timeText);
+
     listElement.appendChild(listItem);
   });
 }
