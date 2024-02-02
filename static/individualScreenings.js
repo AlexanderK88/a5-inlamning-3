@@ -13,7 +13,7 @@ function renderMovieScreenings(movieScreenings) {
 
     const date = new Date(screening.start_time);
 
-    const timeOptions = { hour: "2-digit", minute: "2-digit" };
+    const timeOptions = { hour: "2-digit", minute: "2-digit", hour12: false };
     const dateOptions = { day: "numeric", month: "short", year: "numeric" };
     const time = new Intl.DateTimeFormat("default", timeOptions).format(date);
     const formattedDate = new Intl.DateTimeFormat("default", dateOptions).format(date);
