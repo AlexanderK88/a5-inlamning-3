@@ -78,18 +78,6 @@ export default async function getMovieReviews(id, cmsAdapter) {
   console.log(reviews);
 
   return reviews
-    .filter(review => review.rating >= 3);
+    //.filter(review => review.rating >= 3)
+    .filter(review => review.verified !== false);
 }
-
-/*//change to forEach instead!
-       const verifiedArray = modifiedArray.map((obj) => {
-           if (obj.verified !== false) {
-               console.log(obj.verified);
-               return obj;
-           }            
-       });
-
-       console.log (verifiedArray);
-
-       return verifiedArray;*/
-

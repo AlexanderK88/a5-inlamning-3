@@ -56,6 +56,8 @@ app.get("/newsevents", async (request, response) => {
 app.get("/api/reviews/:movieId", async (request, response) => {
   const reviews = await getMovieReviews((request.params.movieId), cmsAdapter);
 
+  console.log(reviews); 
+  
   if (reviews) {
     response.status(200).json(reviews);
   } else {
