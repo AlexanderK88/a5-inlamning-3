@@ -75,7 +75,7 @@ app.post("/movies/:movieId/review", (request, response) => {
     updatedBy: "nil",
   };
 
-  if (comment.length > 3 && author.length > 3) {
+  if (comment.length > 3 && author.length > 3 && rating >= 1 && rating <= 5) {
     // Convert the JavaScript object to a JSON string
     const jsonData = JSON.stringify(builder(reviewAttributes)) + "\n";
 
@@ -94,7 +94,7 @@ app.post("/movies/:movieId/review", (request, response) => {
         return response.json();
       })
       .then((data) => {
-        console.log("Data written to database:", data);
+        // console.log("Data written to database:", data);
         response.status(201).send("Data written to database");
       })
       .catch((error) => {
@@ -127,7 +127,7 @@ app.post("/movies/:movieId/test", (request, response) => {
   console.log("======");
 
   // Write the JSON data to the file
-  if (comment.length > 3 && author.length > 3) {
+  if (comment.length > 3 && author.length > 3 && rating >= 1 && rating <= 5) {
     fs.appendFile("./static/review.json", jsonData, (err) => {
       if (err) {
         console.error("Error writing to file:", err);
@@ -135,6 +135,7 @@ app.post("/movies/:movieId/test", (request, response) => {
       } else {
         console.log("Data written to file");
         response.status(201);
+        // expect(response.text).toBe("Data written to file");
       }
     });
   } else {
