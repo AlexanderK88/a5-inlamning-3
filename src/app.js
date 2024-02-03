@@ -2,6 +2,7 @@ import express from "express";
 import { engine } from "express-handlebars";
 import { getMovie, getMovies } from "./movies.js";
 import cmsScreenings from "./cmsScreenings.js";
+import getRecentScreenings from "./getRecentScreenings.js";
 import { marked } from "marked";
 
 const app = express();
