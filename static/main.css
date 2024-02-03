@@ -71,7 +71,10 @@ main {
   z-index: 50;
   opacity: 0;
   visibility: hidden;
-  transition: background-color 0.5s, opacity 0.5s, visibility 0.5s;
+  transition:
+    background-color 0.5s,
+    opacity 0.5s,
+    visibility 0.5s;
 }
 .header__hamburgerMenuContainer.header__hamburgerMenuContainer--open {
   opacity: 1;
@@ -104,7 +107,9 @@ main {
   box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.4);
   opacity: 0;
   transform: scale(0.8);
-  transition: opacity 0.2s ease 0.1s, transform 0.2s ease 0.1s;
+  transition:
+    opacity 0.2s ease 0.1s,
+    transform 0.2s ease 0.1s;
 }
 .header__hamburgerMenu.header__hamburgerMenu--active {
   opacity: 1;
@@ -212,6 +217,25 @@ main {
   color: #ffffff;
   text-decoration: none;
   margin-bottom: 10px;
+}
+
+.frontpage {
+  color: #ffffff;
+}
+.frontpage__mainTitle {
+  margin: 15px 0px;
+}
+.frontpage__screenings {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.frontpage__container {
+  margin-bottom: 15px;
+}
+.frontpage__title {
+  margin-bottom: 5px;
+  text-align: center;
 }
 
 .sponsors {
