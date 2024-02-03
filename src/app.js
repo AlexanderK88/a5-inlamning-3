@@ -2,6 +2,9 @@ import express from "express";
 import { engine } from "express-handlebars";
 import { getMovie, getMovies } from "./movies.js";
 import { marked } from "marked";
+import getMovieReviews from "./movies.js";
+import cmsAdapter from "./cmsAdapter.js";
+//import Test from "supertest/lib/test.js";
 
 const app = express();
 app.engine("handlebars", engine());
@@ -47,6 +50,19 @@ app.get("/aboutus", async (request, response) => {
 
 app.get("/newsevents", async (request, response) => {
   renderPage(response, "newsevents");
+});
+
+//get reviews for a movie
+app.get("/api/reviews/:movieId", async (request, response) => {
+  const reviews = await getMovieReviews((request.params.movieId), cmsAdapter);
+
+  if (reviews) {
+    response.status(200).json(reviews);
+  } else {
+    response.sendStatus(404).json({
+      error: "No reviews",
+    });
+  }
 });
 
 app.use("/static", express.static("./static"));
