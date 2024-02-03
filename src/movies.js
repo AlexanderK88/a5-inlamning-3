@@ -13,6 +13,7 @@ async function xloadMovieReviews(number) {
 //to test if there are more reviews to get & call for the fetch: 
 async function evaluateIndex(index, number, payload) {
   if (index > 1) {
+    number++;
     return reviews = await xloadMovieReviews(number);
   } else {
     return payload;
