@@ -2,6 +2,7 @@ import express from "express";
 import { engine } from "express-handlebars";
 import { getMovie, getMovies, getMovieScreenings } from "./movies.js";
 import { marked } from "marked";
+import cmsAdapter from "./cmsAdapterScreenings.js";
 
 const app = express();
 app.engine("handlebars", engine());
@@ -36,14 +37,22 @@ app.get("/movies", async (request, response) => {
 });
 
 app.get("/movies/:movieId", async (request, response) => {
-  const movie = await getMovie(request.params.movieId);
-  movie.intro = marked(movie.intro);
-  renderPage(response, "movie", { movie });
+  try {
+    const movie = await getMovie(request.params.movieId);
+    movie.intro = marked(movie.intro);
+    renderPage(response, "movie", { movie });
+  } catch(error) {
+    renderPage(response, '404')
+  }
 });
 
-app.get("/api/movies/:id/screenings", async (req, res) => {
-  const movieScreenings = await getMovieScreenings(req.params.id);
-  res.json(movieScreenings);
+app.get("/api/movies/:id/screenings", async (request, response) => {
+  try{
+    const movieScreenings = await getMovieScreenings(cmsAdapter, request.params.id);
+    response.json(movieScreenings);
+  }catch(error) {
+    console.log(error.message)
+  }
 });
 
 app.get("/aboutus", async (request, response) => {

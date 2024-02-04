@@ -23,10 +23,10 @@ export async function getMovie(id) {
   };
 }
 
-export async function getMovieScreenings(id) {
-  const res = await fetch(`${API_BASE}/screenings?filters[movie]=${id}`);
-  const payload = await res.json();
-  return payload.data
+export async function getMovieScreenings(cmsAdapter, id) {
+  try{
+    const payload = await cmsAdapter.loadAllMovieScreenings(id)
+    return payload.data
     .map((screening) => ({
       id: screening.id,
       ...screening.attributes,
@@ -43,4 +43,7 @@ export async function getMovieScreenings(id) {
 
       return dateA - dateB;
     });
+  }catch(error) {
+    console.log(error.message)
+  }
 }
