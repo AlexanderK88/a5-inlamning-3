@@ -73,13 +73,11 @@ data.append('comment', reviewComment);
 data.append('rating', rating);
 data.append('author', nameOfAuthor);
 
-console.log(data.toString());
 
 
 const response = await fetch('/movies/:movieId/review', {
     method: 'POST',
     body: data
   });
-
 });
 </script>
