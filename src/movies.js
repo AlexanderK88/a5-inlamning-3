@@ -26,8 +26,21 @@ export async function getMovie(id) {
 export async function getMovieScreenings(id) {
   const res = await fetch(`${API_BASE}/screenings?filters[movie]=${id}`);
   const payload = await res.json();
-  return payload.data.map((screening) => ({
-    id: screening.id,
-    ...screening.attributes,
-  }));
+  return payload.data
+    .map((screening) => ({
+      id: screening.id,
+      ...screening.attributes,
+    }))
+    .filter((screening) => {
+      const screeningDate = new Date(screening.start_time);
+      const currentDate = new Date();
+
+      return screeningDate >= currentDate;
+    })
+    .sort((a, b) => {
+      const dateA = new Date(a.start_time);
+      const dateB = new Date(b.start_time);
+
+      return dateA - dateB;
+    });
 }
