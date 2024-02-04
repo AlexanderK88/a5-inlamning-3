@@ -2,7 +2,6 @@ export default function renderMovieScreenings(movieScreenings) {
   const listElement = document.querySelector(".movieInformation__list");
   if(movieScreenings.length > 0) {
     movieScreenings.forEach((screening) => {
-      console.log(screening)
       const listItem = document.createElement("li");
   
       const date = new Date(screening.start_time);
