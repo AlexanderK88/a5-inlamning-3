@@ -1,8 +1,8 @@
 import express from "express";
 import { engine } from "express-handlebars";
-import { getMovie, getMovies } from "./movies.js";
 import cmsScreenings from "./cmsScreenings.js";
 import getRecentScreenings from "./getRecentScreenings.js";
+import { getMovie, getMovies, getMovieScreenings } from "./movies.js";
 import { marked } from "marked";
 
 const app = express();
@@ -46,6 +46,11 @@ app.get("/movies/:movieId", async (request, response) => {
   const movie = await getMovie(request.params.movieId);
   movie.intro = marked(movie.intro);
   renderPage(response, "movie", { movie });
+});
+
+app.get("/api/movies/:id/screenings", async (req, res) => {
+  const movieScreenings = await getMovieScreenings(req.params.id);
+  res.json(movieScreenings);
 });
 
 app.get("/aboutus", async (request, response) => {
