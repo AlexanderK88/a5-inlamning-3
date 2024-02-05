@@ -1,11 +1,17 @@
+<script src="/static/individualScreenings.js" type="module" defer></script>
 <section class="movieInformation">
   <div class="movieInformation__container">
     {{#if movie.image}}
       <img class="movieInformation__img" src="{{movie.image.url}}" />
     {{/if}}
-    <h1>{{movie.title}}</h1>
+    <h1 class="movieInformation__title">{{movie.title}}</h1>
     <div class="movieInformation__intro">
       {{{movie.intro}}}
+    </div>
+    <div class="movieInformation__screenings">
+      <h2 class="movieInformation__screenigsHeading">Screenings</h2>
+      <ul class="movieInformation__list">
+      </ul>
     </div>
     <a class="movieInformation__link" href="/movies">Back to homepage</a>
   </div>

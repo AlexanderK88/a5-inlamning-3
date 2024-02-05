@@ -535,6 +535,9 @@ main {
   margin: 100px 0;
   max-width: 400px;
 }
+.movieInformation__title {
+  margin-bottom: 10px;
+}
 .movieInformation__img {
   width: 350px;
   margin: 20px 0;
@@ -544,4 +547,15 @@ main {
   text-decoration: underline;
   font-size: 1.5rem;
   margin: 20px 0;
+}
+.movieInformation__screenigsHeading {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+.movieInformation__list {
+  list-style: none;
+  text-align: left;
+}
+.movieInformation__list li {
+  padding-bottom: 10px;
 }
