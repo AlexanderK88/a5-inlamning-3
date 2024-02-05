@@ -3,48 +3,59 @@ import fetch from "node-fetch";
 const API_BASE = "https://plankton-app-xhkom.ondigitalocean.app/api";
 
 //fetch all reviews for a movie when there are more reviews than in the first fetch:
-async function xloadMovieReviews(number) {
+async function xloadMovieReviews(id, number) {
+  console.log(id);
+  console.log(number);
   //const API_BASE = "https://plankton-app-xhkom.ondigitalocean.app/api";
-  const response = await fetch(API_BASE + "/reviews?pagination[pageSize]=" + number);
+  const response = await fetch(API_BASE + "/reviews?filters[movie]=" + id + "&pagination[pageSize]=" + number);
   const payload = await response.json();
+  console.log(payload);
   return payload;
 }
 
-//to test if there are more reviews to get & call for the fetch: 
-async function evaluateIndex(index, number, payload) {
+//test if there are more reviews to get & call for the fetch: 
+async function evaluateIndex(id, index, number, payload) {
   if (index > 1) {
-    number = Math.ceil(number);
-    //console.log(number);
-    return reviews = await xloadMovieReviews(number);
+    //number = Math.ceil(number);
+    console.log(number);
+    const reviews = await xloadMovieReviews(id, number);
+    return reviews;
   } else {
     return payload;
   }
 }
 
-//secure right amount of reviews & prepare review object:
-async function prepareReviews(payload) {
+//secure right amount of reviews:
+async function prepareReviews(id, payload) {
   if (payload.meta) {
     let xPageSize = payload.meta.pagination.pageSize;
     let xTotalReviews = payload.meta.pagination.total;
     let loadIndex = xTotalReviews / xPageSize;
     console.log(loadIndex);
-    const reviews = await evaluateIndex(loadIndex, xTotalReviews, payload);
+    const reviews = await evaluateIndex(id, loadIndex, xTotalReviews, payload);
     console.log(reviews);
+    /*console.log(reviews);
     return reviews.data.map((obj) => {
+      if (obj.attributes.author === null) {
+        obj.attributes.author = "Anonymous"
+      } 
+      console.log(obj.attributes.author);
       return {
         id: obj.id,
         ...obj.attributes,
       }
-    });
-  } else {
-    console.log(payload);
-    const reviews = payload.data.map((obj) => {
-      return {
-        id: obj.id,
-        ...obj.attributes,
-      }
-    });
+    });*/
     return reviews;
+  } else {
+    //console.log(payload);
+    /*const reviews = payload.data.map((obj) => {
+      console.log(obj.attributes.author);
+      return {
+        id: obj.id,
+        ...obj.attributes,
+      }
+    });*/
+    return payload;
   }
 }
 
@@ -77,14 +88,26 @@ export default async function getMovieReviews(id, cmsAdapter) {
 
   //OBS: 
   //gick ej att byta ut till 
-  //const preparedReviews = await prepareReviews(payload);
+  //const preparedReviews = await prepareReviews(payload)
   //.filter(review => review.verified !== false);
-  const reviews = await prepareReviews(payload)
-  const preparedReviews = reviews
-    .filter(review => review.verified !== false);
-  console.log(preparedReviews);
+  const reviews = await prepareReviews(id, payload);
+  console.log(reviews);
 
-  return preparedReviews;
+  //prepare reviews for right content & format
+  const preparedReviews = reviews.data.map((obj) => {
+      if (obj.attributes.author === null) {
+        obj.attributes.author = "Anonymous"
+      } 
+      console.log(obj.attributes.author);
+      return {
+        id: obj.id,
+        ...obj.attributes,
+      }
+    });
+  const reviewsData = preparedReviews
+  .filter(review => review.verified !== false);
+
+  return reviewsData;
 };
  
 //for pagination
