@@ -13,7 +13,8 @@ async function xloadMovieReviews(number) {
 //to test if there are more reviews to get & call for the fetch: 
 async function evaluateIndex(index, number, payload) {
   if (index > 1) {
-    number++;
+    number = Math.ceil(number);
+    //console.log(number);
     return reviews = await xloadMovieReviews(number);
   } else {
     return payload;
@@ -68,17 +69,101 @@ export async function getMovie(id) {
   };
 }
 
+
 //reviews for a movie
 export default async function getMovieReviews(id, cmsAdapter) {
   const payload = await cmsAdapter.loadMovieReviews(id);
-
   console.log(payload);
-  //console.log(payload.meta.pagination);
 
-  const reviews = await prepareReviews(payload);
-  console.log(reviews);
-
-  return reviews
-    //.filter(review => review.rating >= 3)
+  //OBS: 
+  //gick ej att byta ut till 
+  //const preparedReviews = await prepareReviews(payload);
+  //.filter(review => review.verified !== false);
+  const reviews = await prepareReviews(payload)
+  const preparedReviews = reviews
     .filter(review => review.verified !== false);
-}
+  console.log(preparedReviews);
+
+  return preparedReviews;
+};
+ 
+//for pagination
+/*export async function paginate(pageRequested, pageSize, dataLength) {
+  const page = pageRequested || 1;
+  const startIndex = (page - 1) * pageSize;
+  console.log(startIndex);
+  const endIndex = startIndex + pageSize;
+  const pageCount = Math.ceil(dataLength / pageSize);
+  console.log(pageCount);
+  
+  //pagionation data
+  const pagination = { 
+    page,
+    limit: pageSize,
+    pageCount,
+    startIndex,
+    endIndex
+  };
+  return pagination;
+}*/
+
+  //for pagination:
+  //return paginatedResult = paginate(preparedReviews);
+
+  /*const page = parseInt(request.query.page);
+  const limit = parseInt(request.query.limit);
+  const startIndex = (page-1) * limit;
+  const endIndex = page * limit;
+
+  const sentResult = {};
+  if (endIndex < preparedReviews.length) {
+    sentResult.next = {
+      page: page + 1,
+      limit: limit,
+    };
+  }
+  if (startIndex > 0) {
+    sentResult.pevious = {
+      page: page -1,
+      limit: limit,
+    };
+  }
+
+  sentResult.results = preparedReviews.slice(startIndex, endIndex);
+  return sentResult;*/
+
+  //return reviews
+  //.filter(review => review.rating >= 3)
+  //.filter(review => review.verified !== false)
+  //.slice(startIndex, endIndex);
+
+/*function paginate(resource) {
+  return (request, response, next) => {
+    const page = parseInt(request.query.page);
+    const limit = parseInt(request.query.limit);
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+
+    //add next &/or previous when necessary:
+    const preparedResult = {};
+    if (endIndex < resource.length) {
+      preparedResult.next = {
+        page: page + 1,
+        limit: limit,
+      };
+    }
+    if (startIndex > 0) {
+      preparedResult.pevious = {
+        page: page - 1,
+        limit: limit,
+      };
+    }
+
+    preparedResult.results = resource.slice(startIndex, endIndex);
+    console.log(preparedResult.results);
+    //response.paginatedResult = preparedResult;
+    response = preparedResult;
+    next();
+    //return sentResult;
+  }
+}*/
