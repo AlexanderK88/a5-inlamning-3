@@ -144,9 +144,9 @@ app.get("/api/reviews/:movieId", async (request, response, /*next*/) => {
       response.sendStatus(404);
     }
   } catch (error) {
-    response.sendStatus(404).json({
+    response.sendStatus(404);/*.json({
       error: "No reviews",
-    });
+    });*/
   }
 });
 
