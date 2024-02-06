@@ -1,16 +1,25 @@
 async function fetchScreenings() {
-  const response = await fetch("/api/recent-screenings");
-  const originalData = await response.json();
-  const relevantData = originalData.map((screening) => ({
-    start_time: convertToEuropeanTime(screening.attributes.start_time),
-    start_date: convertToEuropeanDate(screening.attributes.start_time),
-    room: screening.attributes.room,
-    title: screening.attributes.movie.data.attributes.title,
-  }));
+  try {
+    const response = await fetch("/api/recent-screenings");
 
-  for (let i = 0; i < relevantData.length; i++) {
-    const screeningData = appendScreenings(relevantData[i]);
-    document.querySelector(".frontpage__screenings").appendChild(screeningData);
+    if (!response.ok) {
+      throw new error(`Status: ${response.status} Failed to fetch screenings!`);
+    }
+
+    const originalData = await response.json();
+    const relevantData = originalData.map((screening) => ({
+      start_time: convertToEuropeanTime(screening.attributes.start_time),
+      start_date: convertToEuropeanDate(screening.attributes.start_time),
+      room: screening.attributes.room,
+      title: screening.attributes.movie.data.attributes.title,
+    }));
+
+    for (let i = 0; i < relevantData.length; i++) {
+      const screeningData = appendScreenings(relevantData[i]);
+      document.querySelector(".frontpage__screenings").appendChild(screeningData);
+    }
+  } catch (error) {
+    console.error("Can't fetch screenings", error.message);
   }
 }
 
