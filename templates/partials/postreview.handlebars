@@ -56,7 +56,7 @@ const postBtn = document.querySelector("#postBtn");
 const reviewForm = document.getElementById("reviewForm");
 
 
-reviewForm.addEventListener('submit', async () => {
+postBtn.addEventListener('click', async () => {
   event.preventDefault();
     const reviewComment = document.querySelector('#reviewMsg').value;
     let revcom = reviewComment;
@@ -73,11 +73,12 @@ data.append('comment', reviewComment);
 data.append('rating', rating);
 data.append('author', nameOfAuthor);
 
+console.log(data);
 
-
-const response = await fetch('/movies/:movieId/review', {
+const response = await fetch(`/movies/review`, {
     method: 'POST',
     body: data
   });
+
 });
 </script>

@@ -60,24 +60,28 @@ app.get("/newsevents", async (request, response) => {
   renderPage(response, "newsevents");
 });
 
-app.post("/movies/:movieId/review", (request, response) => {
+app.post("/movies/review", (request, response) => {
   const id = request.body.id;
   const comment = request.body.comment;
   const rating = request.body.rating;
   const author = request.body.author;
-
+  console.log("request: ", request);
   const reviewAttributes = {
     movie: id,
     comment: comment,
     rating: rating,
     author: author,
+    createdAt: "2024-02-05T16:45:17.078Z",
+    updatedAt: "2024-02-05T16:45:17.078Z",
     createdBy: author,
+    updatedBy: author,
   };
-
   // Convert the JavaScript object to a JSON string
   const jsonData = JSON.stringify(builder(reviewAttributes)) + "\n";
 
-  const fetchUrl = `https://plankton-app-xhkom.ondigitalocean.app/api/reviews`;
+  console.log("review attr: ", jsonData);
+
+  const fetchUrl = "https://plankton-app-xhkom.ondigitalocean.app/api/reviews";
   fetch(fetchUrl, {
     method: "POST",
     headers: {
@@ -92,7 +96,7 @@ app.post("/movies/:movieId/review", (request, response) => {
       return response.json();
     })
     .then((data) => {
-      // console.log("Data written to database:", data);
+      console.log("Data written to database:", data);
       response.status(201).send("Data written to database");
     })
     .catch((error) => {
@@ -101,47 +105,48 @@ app.post("/movies/:movieId/review", (request, response) => {
     });
 });
 
-//Test POST to local review.json
-app.post("/movies/:movieId/test", (request, response) => {
-  const id = request.body.id;
-  const comment = request.body.comment;
-  const rating = request.body.rating;
-  const author = request.body.author;
+// //Test POST to local review.json
+// app.post("/movies/:movieId/test", (request, response) => {
+//   const id = request.body.id;
+//   const comment = request.body.comment;
+//   const rating = request.body.rating;
+//   const author = request.body.author;
 
-  const reviewAttributes = {
-    movie: id,
-    comment: comment,
-    rating: rating,
-    author: author,
-    createdBy: author,
-    updatedBy: "nil",
-  };
+//   const reviewAttributes = {
+//     movie: id,
+//     comment: comment,
+//     rating: rating,
+//     author: author,
+//     createdBy: author,
+//     updatedBy: "nil",
+//     verified: false,
+//   };
 
-  // Convert the JavaScript object to a JSON string
-  const jsonData = JSON.stringify(builder(reviewAttributes)) + "\n";
+//   // Convert the JavaScript object to a JSON string
+//   const jsonData = JSON.stringify(builder(reviewAttributes)) + "\n";
 
-  console.log("builder:", jsonData); // Pass request.body to builder
-  console.log("======");
+//   console.log("builder:", jsonData); // Pass request.body to builder
+//   console.log("======");
 
-  // Write the JSON data to the file
-  if (comment.length > 3 && author.length > 3 && rating >= 1 && rating <= 5) {
-    fs.appendFile("./static/review.json", jsonData, (err) => {
-      if (err) {
-        console.error("Error writing to file:", err);
-        response.status(500);
-      } else {
-        console.log("Data written to file");
-        response.status(201);
-        // expect(response.text).toBe("Data written to file");
-      }
-    });
-  } else {
-    console.log("To little info");
-    response
-      .status(400)
-      .send("Bad Request: Insufficient information provided in comment and author fields");
-  }
-});
+//   // Write the JSON data to the file
+//   if (comment.length > 3 && author.length > 3 && rating >= 1 && rating <= 5) {
+//     fs.appendFile("./static/review.json", jsonData, (err) => {
+//       if (err) {
+//         console.error("Error writing to file:", err);
+//         response.status(500);
+//       } else {
+//         console.log("Data written to file");
+//         response.status(201);
+//         // expect(response.text).toBe("Data written to file");
+//       }
+//     });
+//   } else {
+//     console.log("To little info");
+//     response
+//       .status(400)
+//       .send("Bad Request: Insufficient information provided in comment and author fields");
+//   }
+// });
 
 app.use("/static", express.static("./static"));
 app.use("/public", express.static("./public"));
