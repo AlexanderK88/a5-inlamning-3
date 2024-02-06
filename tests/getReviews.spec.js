@@ -1,8 +1,8 @@
-import getMovieReviews from "../src/movies";
+import getMovieReviews from "../src/showReviews";
 
 describe("getMovieReviews()", () => {    
     test("excludes a review with verified == false", async () => {
-        const cmsAdapter = {
+        const cmsAdapterReviews = {
             loadMovieReviews: async () => ({
                 data: [
                     mockReviews({ verified: false }),
@@ -20,7 +20,7 @@ describe("getMovieReviews()", () => {
             })
         };
 
-        const data = await getMovieReviews(3, cmsAdapter);
+        const data = await getMovieReviews(3, cmsAdapterReviews);
 
         expect(data).toHaveLength(2);
     });

@@ -1,13 +1,13 @@
 import { expect, test } from '@jest/globals';
 import request from 'supertest';
 import app from '../src/app';
-import getMovieReviews from "../src/movies";
+import getMovieReviews from "../src/showReviews";
 
 //OBS: Does not test when total > pageSize
 
 describe("GET /api/reviews/:movieId", () => {
     test('should return max 5 revies and 1 pagination data-object', async () => {
-        const cmsAdapter = {
+        const cmsAdapterReviews = {
             loadMovieReviews: async () => ({
                 data: [
                     mockReviews({ verified: false }),
@@ -25,7 +25,7 @@ describe("GET /api/reviews/:movieId", () => {
             })
         };
 
-        await getMovieReviews(3, cmsAdapter)
+        await getMovieReviews(3, cmsAdapterReviews)
         request(app).get("/api/reviews/:movieId")
             .query({ page: 1 })
             .query({ limit: 5 })
@@ -33,12 +33,11 @@ describe("GET /api/reviews/:movieId", () => {
             .then((res) => {
                 expect(res.body.length).toBeLessThanOrEqual(6);
                 expect(res.body.length).toBeGreaterThanOrEqual(1);
-                expect(res.body.length).toBe(0);
             })
     });
 
     test('should return max 5 revies and 1 pagination data-object', async () => {
-        const cmsAdapter = {
+        const cmsAdapterReviews = {
             loadMovieReviews: async () => ({
                 data: [
                     mockReviews({ verified: false }),
@@ -77,7 +76,7 @@ describe("GET /api/reviews/:movieId", () => {
             })
         };
 
-        await getMovieReviews(3, cmsAdapter)
+        await getMovieReviews(3, cmsAdapterReviews)
         request(app).get("/api/reviews/:movieId")
             .query({ page: 2 })
             .query({ limit: 5 })
