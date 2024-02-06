@@ -2,7 +2,9 @@ import express from "express";
 import { engine } from "express-handlebars";
 import { getMovie, getMovies, getMovieScreenings } from "./movies.js";
 import { marked } from "marked";
-import { builder } from "../buildReviewBody.js";
+import { builder } from "./buildReviewBody.js";
+import { parser as reviewParser } from "./postReviewParser.js";
+import { postRequest } from "./reviewPostFunction.js";
 import cmsAdapter from "./cmsAdapterScreenings.js";
 
 const app = express();
@@ -69,48 +71,20 @@ app.get("/newsevents", async (request, response) => {
 });
 
 app.post("/movies/review", (request, response) => {
-  const id = request.body.id;
-  const comment = request.body.comment;
-  const rating = request.body.rating;
-  const author = request.body.author;
-  console.log("request: ", request);
-  const reviewAttributes = {
-    movie: id,
-    comment: comment,
-    rating: rating,
-    author: author,
-    createdAt: "2024-02-05T16:45:17.078Z",
-    updatedAt: "2024-02-05T16:45:17.078Z",
-    createdBy: author,
-    updatedBy: author,
-  };
-  // Convert the JavaScript object to a JSON string
-  const jsonData = JSON.stringify(builder(reviewAttributes)) + "\n";
+  //Extracts URL-Query string to object
+  const reviewAtributes = reviewParser(request);
 
+  // Convert the JavaScript object to a JSON string
+  const jsonData = JSON.stringify(builder(reviewAtributes)) + "\n";
+
+  //Print out the json-string to make sure its correct.
   console.log("review attr: ", jsonData);
 
-  const fetchUrl = "https://plankton-app-xhkom.ondigitalocean.app/api/reviews";
-  fetch(fetchUrl, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: jsonData,
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Failed to write data to database");
-      }
-      return response.json();
-    })
-    .then((data) => {
-      console.log("Data written to database:", data);
-      response.status(201).send("Data written to database");
-    })
-    .catch((error) => {
-      console.error("Error writing to database:", error.message);
-      response.status(500).send("Error writing to database");
-    });
+  //Url to DB for post-function
+  const url = "https://plankton-app-xhkom.ondigitalocean.app/api/reviews";
+
+  //request the post command with url and json-string.
+  postRequest(url, jsonData, response);
 });
 
 app.use("/static", express.static("./static"));
