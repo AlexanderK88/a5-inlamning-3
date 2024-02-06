@@ -1,8 +1,5 @@
 import app from "./src/app.js";
 
-const port = 5080;
-app.listen(port);
-
-console.log("========================");
-console.log(`== Listening to: ${port} ==`);
-console.log("========================");
+app.listen(5080, () => {
+  console.log("listening on port 5080");
+});
