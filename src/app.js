@@ -3,7 +3,6 @@ import { engine } from "express-handlebars";
 import { getMovie, getMovies, getMovieScreenings } from "./movies.js";
 import { marked } from "marked";
 import { builder } from "../buildReviewBody.js";
-import fs from "fs";
 
 const app = express();
 app.engine("handlebars", engine());
@@ -104,49 +103,6 @@ app.post("/movies/review", (request, response) => {
       response.status(500).send("Error writing to database");
     });
 });
-
-// //Test POST to local review.json
-// app.post("/movies/:movieId/test", (request, response) => {
-//   const id = request.body.id;
-//   const comment = request.body.comment;
-//   const rating = request.body.rating;
-//   const author = request.body.author;
-
-//   const reviewAttributes = {
-//     movie: id,
-//     comment: comment,
-//     rating: rating,
-//     author: author,
-//     createdBy: author,
-//     updatedBy: "nil",
-//     verified: false,
-//   };
-
-//   // Convert the JavaScript object to a JSON string
-//   const jsonData = JSON.stringify(builder(reviewAttributes)) + "\n";
-
-//   console.log("builder:", jsonData); // Pass request.body to builder
-//   console.log("======");
-
-//   // Write the JSON data to the file
-//   if (comment.length > 3 && author.length > 3 && rating >= 1 && rating <= 5) {
-//     fs.appendFile("./static/review.json", jsonData, (err) => {
-//       if (err) {
-//         console.error("Error writing to file:", err);
-//         response.status(500);
-//       } else {
-//         console.log("Data written to file");
-//         response.status(201);
-//         // expect(response.text).toBe("Data written to file");
-//       }
-//     });
-//   } else {
-//     console.log("To little info");
-//     response
-//       .status(400)
-//       .send("Bad Request: Insufficient information provided in comment and author fields");
-//   }
-// });
 
 app.use("/static", express.static("./static"));
 app.use("/public", express.static("./public"));
