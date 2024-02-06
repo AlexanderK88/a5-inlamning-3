@@ -73,7 +73,7 @@ app.get("/newsevents", async (request, response) => {
 app.post("/movies/review", (request, response) => {
   //Extracts URL-Query string to object
   const reviewAtributes = reviewParser(request);
-
+  console.log(reviewAtributes);
   // Convert the JavaScript object to a JSON string
   const jsonData = JSON.stringify(builder(reviewAtributes)) + "\n";
 

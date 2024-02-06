@@ -1,8 +1,10 @@
+import xss from "xss";
+
 export function parser(request) {
   const id = request.body.id;
-  const comment = request.body.comment;
+  const comment = xss(request.body.comment);
   const rating = request.body.rating;
-  const author = request.body.author;
+  const author = xss(request.body.author);
 
   const data = {
     movie: id,
