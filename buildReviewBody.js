@@ -1,5 +1,4 @@
 export function builder(attributes) {
-  const date = new Date().toISOString();
   const body = {
     data: {
       comment: "string",

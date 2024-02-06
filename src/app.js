@@ -3,7 +3,7 @@ import { engine } from "express-handlebars";
 import { getMovie, getMovies, getMovieScreenings } from "./movies.js";
 import { marked } from "marked";
 import { builder } from "../buildReviewBody.js";
-import fs from "fs";
+import cmsAdapter from "./cmsAdapterScreenings.js";
 
 const app = express();
 app.engine("handlebars", engine());
@@ -42,14 +42,22 @@ app.get("/movies", async (request, response) => {
 });
 
 app.get("/movies/:movieId", async (request, response) => {
-  const movie = await getMovie(request.params.movieId);
-  movie.intro = marked(movie.intro);
-  renderPage(response, "movie", { movie });
+  try {
+    const movie = await getMovie(request.params.movieId);
+    movie.intro = marked(movie.intro);
+    renderPage(response, "movie", { movie });
+  } catch (error) {
+    renderPage(response, "404");
+  }
 });
 
-app.get("/api/movies/:id/screenings", async (req, res) => {
-  const movieScreenings = await getMovieScreenings(req.params.id);
-  res.json(movieScreenings);
+app.get("/api/movies/:id/screenings", async (request, response) => {
+  try {
+    const movieScreenings = await getMovieScreenings(cmsAdapter, request.params.id);
+    response.json(movieScreenings);
+  } catch (error) {
+    console.log(error.message);
+  }
 });
 
 app.get("/aboutus", async (request, response) => {
@@ -94,7 +102,6 @@ app.post("/movies/:movieId/review", (request, response) => {
         return response.json();
       })
       .then((data) => {
-        // console.log("Data written to database:", data);
         response.status(201).send("Data written to database");
       })
       .catch((error) => {
@@ -135,7 +142,6 @@ app.post("/movies/:movieId/test", (request, response) => {
       } else {
         console.log("Data written to file");
         response.status(201);
-        // expect(response.text).toBe("Data written to file");
       }
     });
   } else {

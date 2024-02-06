@@ -23,24 +23,27 @@ export async function getMovie(id) {
   };
 }
 
-export async function getMovieScreenings(id) {
-  const res = await fetch(`${API_BASE}/screenings?filters[movie]=${id}`);
-  const payload = await res.json();
-  return payload.data
-    .map((screening) => ({
-      id: screening.id,
-      ...screening.attributes,
-    }))
-    .filter((screening) => {
-      const screeningDate = new Date(screening.start_time);
-      const currentDate = new Date();
+export async function getMovieScreenings(cmsAdapter, id) {
+  try {
+    const payload = await cmsAdapter.loadAllMovieScreenings(id);
+    return payload.data
+      .map((screening) => ({
+        id: screening.id,
+        ...screening.attributes,
+      }))
+      .filter((screening) => {
+        const screeningDate = new Date(screening.start_time);
+        const currentDate = new Date();
 
-      return screeningDate >= currentDate;
-    })
-    .sort((a, b) => {
-      const dateA = new Date(a.start_time);
-      const dateB = new Date(b.start_time);
+        return screeningDate >= currentDate;
+      })
+      .sort((a, b) => {
+        const dateA = new Date(a.start_time);
+        const dateB = new Date(b.start_time);
 
-      return dateA - dateB;
-    });
+        return dateA - dateB;
+      });
+  } catch (error) {
+    console.log(error.message);
+  }
 }
