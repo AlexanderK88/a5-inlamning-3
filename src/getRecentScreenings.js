@@ -1,5 +1,5 @@
-export default async function getRecentScreenings(cmsScreenings) {
-  const screenings = await cmsScreenings.loadAllScreenings();
+export default async function getRecentScreenings(cmsAdapterRecentScreenings) {
+  const screenings = await cmsAdapterRecentScreenings.loadAllScreenings();
 
   //Provides the current date as a base
   const currentDate = new Date();

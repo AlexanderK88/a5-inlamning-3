@@ -44,7 +44,7 @@ describe("getRecentScreenings()", () => {
   test("Check if there are 10 upcoming screenings in the next 5 days", async () => {
     jest.setSystemTime(new Date("2024-02-01T19:18:00.000Z"));
 
-    const cmsScreenings = {
+    const cmsAdapterRecentScreenings = {
       loadAllScreenings: async () => [
         mockScreenings({ start_time: "2024-02-01T19:18:00.000Z" }),
         mockScreenings({ start_time: "2024-02-01T23:18:00.000Z" }),
@@ -59,7 +59,7 @@ describe("getRecentScreenings()", () => {
       ],
     };
 
-    const data = await getRecentScreenings(cmsScreenings);
+    const data = await getRecentScreenings(cmsAdapterRecentScreenings);
     expect(data).toHaveLength(10);
 
     const fiveDaysFromNow = new Date("2024-02-06T19:18:00.000Z");

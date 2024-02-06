@@ -1,6 +1,6 @@
 import express from "express";
 import { engine } from "express-handlebars";
-import cmsScreenings from "./cmsScreenings.js";
+import cmsAdapterRecentScreenings from "./cmsAdapterRecentScreenings.js";
 import getRecentScreenings from "./getRecentScreenings.js";
 import { getMovie, getMovies, getMovieScreenings } from "./movies.js";
 import { marked } from "marked";
@@ -33,7 +33,7 @@ app.get("/", async (request, response) => {
 });
 
 app.get("/api/recent-screenings", async (request, response) => {
-  const data = await getRecentScreenings(cmsScreenings);
+  const data = await getRecentScreenings(cmsAdapterRecentScreenings);
   response.json(data);
 });
 
