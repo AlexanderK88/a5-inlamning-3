@@ -542,7 +542,8 @@ main {
 }
 
 .review {
-  width: 30vw;
+  min-width: 200px;
+  max-width: 25vw;
   height: fit-content;
   min-height: 30vh;
   border: 1px solid #ffffff;
@@ -552,12 +553,15 @@ main {
 .review div input {
   border-radius: 5px;
   border: 0;
+  height: 1.5rem;
+  width: 80%;
 }
 .review__rating {
   display: flex;
   flex-direction: row;
-  margin-left: 10px;
-  margin-bottom: 5px;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
 }
 .review__rating span {
   display: block;
@@ -599,6 +603,8 @@ main {
 }
 .review__message #reviewMsg {
   height: 80%;
+  margin: 10 auto;
+  width: 80%;
 }
 .review input {
   margin: 0.5rem;
@@ -614,4 +620,5 @@ main {
   font-size: large;
   font-weight: 700;
   padding: 3px;
+  margin: 10px 0;
 }
