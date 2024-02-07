@@ -219,6 +219,25 @@ main {
   margin-bottom: 10px;
 }
 
+.frontpage {
+  color: #ffffff;
+}
+.frontpage__mainTitle {
+  margin: 15px 0px;
+}
+.frontpage__screenings {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.frontpage__container {
+  margin-bottom: 15px;
+}
+.frontpage__title {
+  margin-bottom: 5px;
+  text-align: center;
+}
+
 .sponsors {
   background-color: #333333;
   display: flex;

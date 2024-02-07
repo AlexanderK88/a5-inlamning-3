@@ -1,5 +1,7 @@
 import express from "express";
 import { engine } from "express-handlebars";
+import cmsAdapterRecentScreenings from "./cmsAdapterRecentScreenings.js";
+import getRecentScreenings from "./getRecentScreenings.js";
 import { getMovie, getMovies, getMovieScreenings } from "./movies.js";
 import { marked } from "marked";
 import cmsAdapter from "./cmsAdapterScreenings.js";
@@ -29,6 +31,11 @@ async function renderPage(response, page, extraData = {}) {
 
 app.get("/", async (request, response) => {
   renderPage(response, "index");
+});
+
+app.get("/api/recent-screenings", async (request, response) => {
+  const data = await getRecentScreenings(cmsAdapterRecentScreenings);
+  response.json(data);
 });
 
 app.get("/movies", async (request, response) => {
