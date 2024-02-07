@@ -48,17 +48,8 @@ app.get("/movies/:movieId", async (request, response) => {
     const movie = await getMovie(request.params.movieId);
     movie.intro = marked(movie.intro);
     renderPage(response, "movie", { movie });
-  } catch(error) {
-    renderPage(response, '404')
-  }
-});
-
-app.get("/api/movies/:id/screenings", async (request, response) => {
-  try{
-    const movieScreenings = await getMovieScreenings(cmsAdapter, request.params.id);
-    response.json(movieScreenings);
-  }catch(error) {
-    console.log(error.message)
+  } catch (error) {
+    renderPage(response, "404");
   }
 });
 
@@ -68,6 +59,15 @@ app.get("/aboutus", async (request, response) => {
 
 app.get("/newsevents", async (request, response) => {
   renderPage(response, "newsevents");
+});
+
+app.get("/api/movies/:id/screenings", async (request, response) => {
+  try {
+    const movieScreenings = await getMovieScreenings(cmsAdapter, request.params.id);
+    response.json(movieScreenings);
+  } catch (error) {
+    console.log(error.message);
+  }
 });
 
 app.use("/static", express.static("./static"));
