@@ -219,6 +219,25 @@ main {
   margin-bottom: 10px;
 }
 
+.frontpage {
+  color: #ffffff;
+}
+.frontpage__mainTitle {
+  margin: 15px 0px;
+}
+.frontpage__screenings {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.frontpage__container {
+  margin-bottom: 15px;
+}
+.frontpage__title {
+  margin-bottom: 5px;
+  text-align: center;
+}
+
 .sponsors {
   background-color: #333333;
   display: flex;
@@ -518,13 +537,14 @@ main {
 }
 .movieInformation__title {
   margin-bottom: 10px;
+  text-decoration: underline;
 }
 .movieInformation__img {
   width: 350px;
   margin: 20px 0;
 }
 .movieInformation__link {
-  color: #7c7773;
+  color: #800020;
   text-decoration: underline;
   font-size: 1.5rem;
   margin: 20px 0;
@@ -532,6 +552,7 @@ main {
 .movieInformation__screenigsHeading {
   margin-top: 20px;
   margin-bottom: 10px;
+  text-decoration: underline;
 }
 .movieInformation__list {
   list-style: none;

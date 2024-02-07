@@ -1,5 +1,7 @@
 import express from "express";
 import { engine } from "express-handlebars";
+import cmsAdapterRecentScreenings from "./cmsAdapterRecentScreenings.js";
+import getRecentScreenings from "./getRecentScreenings.js";
 import { getMovie, getMovies, getMovieScreenings } from "./movies.js";
 import { marked } from "marked";
 import { builder } from "./buildReviewBody.js";
@@ -38,6 +40,11 @@ app.get("/", async (request, response) => {
   renderPage(response, "index");
 });
 
+app.get("/api/recent-screenings", async (request, response) => {
+  const data = await getRecentScreenings(cmsAdapterRecentScreenings);
+  response.json(data);
+});
+
 app.get("/movies", async (request, response) => {
   const movies = await getMovies();
   renderPage(response, "movies", { movies });
@@ -51,6 +58,14 @@ app.get("/movies/:movieId", async (request, response) => {
   } catch (error) {
     renderPage(response, "404");
   }
+});
+
+app.get("/aboutus", async (request, response) => {
+  renderPage(response, "aboutus");
+});
+
+app.get("/newsevents", async (request, response) => {
+  renderPage(response, "newsevents");
 });
 
 app.get("/api/movies/:id/screenings", async (request, response) => {
