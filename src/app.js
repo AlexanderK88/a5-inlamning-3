@@ -53,6 +53,14 @@ app.get("/movies/:movieId", async (request, response) => {
   }
 });
 
+app.get("/aboutus", async (request, response) => {
+  renderPage(response, "aboutus");
+});
+
+app.get("/newsevents", async (request, response) => {
+  renderPage(response, "newsevents");
+});
+
 app.get("/api/movies/:id/screenings", async (request, response) => {
   try {
     const movieScreenings = await getMovieScreenings(cmsAdapter, request.params.id);
@@ -60,14 +68,6 @@ app.get("/api/movies/:id/screenings", async (request, response) => {
   } catch (error) {
     console.log(error.message);
   }
-});
-
-app.get("/aboutus", async (request, response) => {
-  renderPage(response, "aboutus");
-});
-
-app.get("/newsevents", async (request, response) => {
-  renderPage(response, "newsevents");
 });
 
 app.use("/static", express.static("./static"));
