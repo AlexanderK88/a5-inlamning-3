@@ -85,7 +85,7 @@ app.get("/newsevents", async (request, response) => {
   renderPage(response, "newsevents");
 });
 
-app.post("/movies/review", (request, response) => {
+app.post("/api/movies/review", (request, response) => {
   //Extracts URL-Query string to object
   const reviewAtributes = reviewParser(request);
   console.log(reviewAtributes);

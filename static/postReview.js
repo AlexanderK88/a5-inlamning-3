@@ -36,7 +36,7 @@ postBtn.addEventListener("click", async () => {
 
   console.log(data);
 
-  const response = await fetch(`/movies/review`, {
+  const response = await fetch(`/api/movies/review`, {
     method: "POST",
     body: data,
   });
