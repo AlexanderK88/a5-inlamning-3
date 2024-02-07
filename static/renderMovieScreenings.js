@@ -27,7 +27,6 @@ export default function renderMovieScreenings(movieScreenings) {
     const listItem = document.createElement("li");
     let noScreeningText = document.createElement("p");
     noScreeningText.classList.add("movieInformation__noScreenings");
-
     noScreeningText.textContent = "Sorry, no screening found";
     listItem.appendChild(noScreeningText);
 
