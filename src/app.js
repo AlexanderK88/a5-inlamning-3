@@ -33,7 +33,7 @@ app.get("/", async (request, response) => {
   renderPage(response, "index");
 });
 
-app.get("/api/recent-screenings", async (request, response) => {
+app.get("/api/movies/recent-screenings", async (request, response) => {
   const data = await getRecentScreenings(cmsAdapterRecentScreenings);
   response.json(data);
 });
