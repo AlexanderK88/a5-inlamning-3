@@ -33,7 +33,7 @@ app.get("/", async (request, response) => {
   renderPage(response, "index");
 });
 
-app.get("/api/recent-screenings", async (request, response) => {
+app.get("/api/movies/recent-screenings", async (request, response) => {
   const data = await getRecentScreenings(cmsAdapterRecentScreenings);
   response.json(data);
 });
@@ -48,17 +48,17 @@ app.get("/movies/:movieId", async (request, response) => {
     const movie = await getMovie(request.params.movieId);
     movie.intro = marked(movie.intro);
     renderPage(response, "movie", { movie });
-  } catch(error) {
-    renderPage(response, '404')
+  } catch (error) {
+    renderPage(response, "404");
   }
 });
 
 app.get("/api/movies/:id/screenings", async (request, response) => {
-  try{
+  try {
     const movieScreenings = await getMovieScreenings(cmsAdapter, request.params.id);
     response.json(movieScreenings);
-  }catch(error) {
-    console.log(error.message)
+  } catch (error) {
+    console.log(error.message);
   }
 });
 

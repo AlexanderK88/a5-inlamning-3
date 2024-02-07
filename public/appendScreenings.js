@@ -1,6 +1,6 @@
 async function fetchScreenings() {
   try {
-    const response = await fetch("/api/recent-screenings");
+    const response = await fetch("/api/movies/recent-screenings");
 
     if (!response.ok) {
       throw new error(`Status: ${response.status} Failed to fetch screenings!`);
