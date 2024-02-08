@@ -3,6 +3,7 @@ import { engine } from "express-handlebars";
 import { getMovie, getMovies } from "./movies.js";
 import { marked } from "marked";
 import getMovieReviews from "./getMovieReviews.js";
+import paginateReviews from "./paginationReviews.js"
 import cmsAdapterReviews from "./cmsAdapterReviews.js";
 //import Test from "supertest/lib/test.js";
 
@@ -53,34 +54,10 @@ app.get("/newsevents", async (request, response) => {
 });
 
 //get reviews for a movie
-app.get("/api/movies/:movieId", async (request, response, /*next*/) => {
+app.get("/api/movies/:movieId", async (request, response, next) => {
   try {
-    const reviewsData = await getMovieReviews((request.params.movieId), cmsAdapterReviews);
-
-    const pageRequested = parseInt(request.query.page);
-    const limit = parseInt(request.query.limit);
-    const dataLength = reviewsData.length;
-
-    //prepare pagination data
-    const page = pageRequested || 1;
-    const startIndex = (page - 1) * limit;
-    const endIndex = (startIndex + limit);
-    const pageCount = Math.ceil(dataLength / limit);
-    const total = dataLength;
-
-    //pagionation data
-    const pagination = {
-      page,
-      limit,
-      pageCount,
-      startIndex,
-      endIndex,
-      total
-    };
-
-    //prepare response array
-    const reviews = reviewsData.slice(startIndex, endIndex)
-    const reviewArray = [{data: reviews}, {meta: pagination}];
+    const reviewsData = await getMovieReviews((request.params.movieId), cmsAdapterReviews, next);
+    const reviewArray = await paginateReviews (reviewsData, request.query.page, request.query.limit);
 
     if (reviewArray.length > 1) {
       response.status(200).json(reviewArray);
@@ -88,9 +65,7 @@ app.get("/api/movies/:movieId", async (request, response, /*next*/) => {
       response.sendStatus(404);
     }
   } catch (error) {
-    response.sendStatus(404);/*.json({
-      error: "No reviews",
-    });*/
+    response.sendStatus(404);
   }
 });
 
