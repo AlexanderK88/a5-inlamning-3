@@ -1,0 +1,87 @@
+.review {
+  min-width: 200px;
+  max-width: 25vw;
+  height: fit-content;
+  min-height: 30vh;
+  border: 1px solid #ffffff;
+  border-radius: 5px;
+  margin: 2rem auto;
+  div {
+    input {
+      border-radius: 5px;
+      border: 0;
+      height: 1.5rem;
+      width: 80%;
+    }
+  }
+  &__rating {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+
+    span {
+      display: block;
+      width: 20px;
+      height: 20px;
+      background-image: url("../static/assets/film-solid-empty.svg");
+      margin: 8px 5px;
+      fill: $colorTwo;
+    }
+    span:hover {
+      opacity: 0.7;
+    }
+
+    &--wrapper {
+      display: flex;
+      flex-direction: row;
+      border: 1px solid white;
+    }
+  }
+  .review__rating[aria-valuenow="1"] span:nth-child(1),
+  .review__rating[aria-valuenow="2"] span:nth-child(-n + 2),
+  .review__rating[aria-valuenow="3"] span:nth-child(-n + 3),
+  .review__rating[aria-valuenow="4"] span:nth-child(-n + 4),
+  .review__rating[aria-valuenow="5"] span:nth-child(-n + 5) {
+    background-image: url("../static/assets/film-solid-rated.svg");
+  }
+
+  &__title {
+    display: flex;
+    background-color: $colorThree;
+    border: 1px solid $colorFive;
+    justify-content: left;
+    align-items: center;
+    margin: auto;
+    color: $colorFive;
+  }
+  label {
+    color: $colorFive;
+  }
+
+  &__message {
+    height: 15vh;
+    #reviewMsg {
+      height: 80%;
+      margin: 10 auto;
+      width: 80%;
+    }
+  }
+  input {
+    margin: 0.5rem;
+  }
+  &__post {
+    margin: 5px 1rem;
+    button {
+      width: fit-content;
+      height: 2rem;
+      border-radius: 5px;
+      border: 0;
+      font-size: large;
+      font-weight: 700;
+      padding: 3px;
+      margin: 10px 0;
+    }
+  }
+}
