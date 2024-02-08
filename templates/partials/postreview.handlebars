@@ -1,0 +1,45 @@
+
+
+<section class="review">
+  <div class="review__login" style="display: none;">
+    <input type="text" name="username" placeholder="Enter Username" id="username">
+    <input type="text" name="password" placeholder="Enter Password" id="password">
+    <button id="loginBtn">Login</button>
+  </div>
+  <div class="review__title"><p>Add a review for {{movie.title}}</p></div>
+{{!-- <form action="/movies/:movieId/test" method="post" class="review__form" id="reviewForm"> --}}
+<form method="post" class="review__form" id="reviewForm">
+    <div>
+      <input type="text" name="name" id="reviewName" placeholder="Enter your name" required/>
+      {{!-- <label for="name">Your name</label> --}}
+    </div>
+    <div class="review__rating--wrapper">
+      <div
+        class="review__rating"
+        aria-label="Rating"
+        role="meter"
+        aria-valuemin="0"
+        aria-valuemax="5"
+        aria-valuenow="0"
+      >
+      {{!-- <label for="review__rating">Grade</label> --}}
+        <span aria-hidden="true" class="movieGrade" id="mg-1"></span>
+        <span aria-hidden="true" class="movieGrade" id="mg-2"></span>
+        <span aria-hidden="true" class="movieGrade" id="mg-3"></span>
+        <span aria-hidden="true" class="movieGrade" id="mg-4"></span>
+        <span aria-hidden="true" class="movieGrade" id="mg-5"></span>
+      </div>
+    </div>
+
+    <div class="review__message">
+      <textarea type="text" name="msg" placeholder="Write your thoughts about the movie" id="reviewMsg" required /></textarea>
+      {{!-- <label for="msg">What did you think?</label> --}}
+    </div>
+  <div class="review__post">
+    <button id="postBtn">Submit</button>
+  </div>
+  </form>
+  
+</section>
+
+<script src="../../static/postReview.js" type="module" defer></script>
