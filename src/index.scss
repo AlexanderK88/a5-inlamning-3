@@ -1,0 +1,22 @@
+.frontpage {
+  color: $colorFive;
+
+  &__mainTitle {
+    margin: 15px 0px;
+  }
+
+  &__screenings {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__container {
+    margin-bottom: 15px;
+  }
+
+  &__title {
+    margin-bottom: 5px;
+    text-align: center;
+  }
+}

@@ -16,15 +16,35 @@
     max-width: 400px;
   }
 
+  &__title {
+    margin-bottom: 10px;
+    text-decoration: underline;
+  }
+
   &__img {
     width: 350px;
     margin: 20px 0;
   }
 
   &__link {
-    color: $colorFour;
+    color: $colorThree;
     text-decoration: underline;
     font-size: 1.5rem;
     margin: 20px 0;
+  }
+
+  &__screenigsHeading {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    text-decoration: underline;
+  }
+
+  &__list {
+    list-style: none;
+    text-align: left;
+
+    li {
+      padding-bottom: 10px;
+    }
   }
 }
