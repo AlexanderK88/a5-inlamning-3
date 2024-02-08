@@ -13,11 +13,15 @@ async function fetchMovieReviews(limit, page) {
     return fetchedRevies;
 };
 
+//get elements
 const reviewsList = document.querySelector(".movieInformation__oneReview");
 const buttonArrows = document.querySelector(".movieInformation__reviewsArrows");
 const buttonPagination = document.querySelector(".movieInformation__reviewsPagination");
 
-async function displayMovieReviews(reviewsList, rows, page) {
+//display reviews & buttons
+async function displayMovieReviews(rows, page) {
+
+    //for reviews
     reviewsList.textContent = "";
 
     let responseArray = await fetchMovieReviews(rows, page);
@@ -25,26 +29,48 @@ async function displayMovieReviews(reviewsList, rows, page) {
     let reviewsPageCount = responseArray[1].meta.pageCount;
 
     for (let i = 0; i < rows; i++) {
-                
         let review = reviewsData[i];
+        if (!review) {
+            return;
+        };
         let oneReview = document.createElement("p");
         oneReview.classList.add("movieInformation__oneReviewRating");
-        oneReview.textContent = (`Rating: ${review.rating} "" ${review.comment} Author: "" ${review.author}`);
-
-        reviewsList = appendChild(oneReview);
-    }
+        oneReview.textContent = (`Rating: ${review.rating} -- ${review.comment} -- Author: ${review.author}`);
+        reviewsList.appendChild(oneReview);
+    };
 
     //for buttons
-    //buttonPagination.textContent = "";
-    buttonArrows.textContent ="";
+    buttonPagination.textContent = "";
+    buttonArrows.textContent = "";
 
     //numbered buttons
-    /*for (let i = 1; i < reviewsPageCount + 1; i++) {
-        let btn = paginationButton(i, /*reviewsPageCount*//*);
+    for (let i = 1; i < reviewsPageCount + 1; i++) {
+        let btn = paginationButton(i);
         buttonPagination.appendChild(btn);
-    }*/
+    };
 
     //prev & next buttons
+    prevNextButtons(reviewsPageCount, page);
+};
+
+//create numbered button
+function paginationButton(page) {
+    let button = document.createElement("button");
+    button.textContent = page;
+
+    if (currentPage == page) {
+        button.classList.add("active");
+    };
+
+    button.addEventListener("click", function () {
+        currentPage = page;
+        displayMovieReviews(rows, currentPage);
+    });
+    return button;
+};
+
+//create prev & next buttons
+function prevNextButtons(reviewsPageCount, page) {
     const prev = document.createElement("button");
     const next = document.createElement("button");
 
@@ -53,7 +79,7 @@ async function displayMovieReviews(reviewsList, rows, page) {
         prev.classList.add("movieInformation__reviewsPrev");
         prev.addEventListener("click", function () {
             currentPage = page - 1;
-            displayMovieReviews(reviewsList, rows, currentPage);
+            displayMovieReviews(rows, currentPage);
         });
         return buttonArrows.appendChild(prev);
 
@@ -62,7 +88,7 @@ async function displayMovieReviews(reviewsList, rows, page) {
         next.classList.add("movieInformation__reviewsNext");
         next.addEventListener("click", function () {
             currentPage = page + 1;
-            displayMovieReviews(reviewsList, rows, currentPage);
+            displayMovieReviews(rows, currentPage);
         });
         return buttonArrows.appendChild(next);
 
@@ -71,33 +97,16 @@ async function displayMovieReviews(reviewsList, rows, page) {
         prev.classList.add("movieInformation__reviewsPrev");
         prev.addEventListener("click", function () {
             currentPage = page - 1;
-            displayMovieReviews(reviewsList, rows, currentPage);
+            displayMovieReviews(rows, currentPage);
         });
         next.textContent = (">");
         next.classList.add("movieInformation__reviewsNext");
         next.addEventListener("click", function () {
             currentPage = page + 1;
-            displayMovieReviews(reviewsList, rows, currentPage);
+            displayMovieReviews(rows, currentPage);
         });
         return buttonArrows.append(prev, next);
-    }
-}
+    };
+};
 
-/*function paginationButton(page, /*page_count*//*) {
-    let button = document.createElement("button");
-    button.textContent = page;
-
-    if (currentPage == page) {
-        button.classList.add("active");
-    }
-
-    button.addEventListener("click", function () {
-        currentPage = page;
-        displayMovieReviews(reviewsList, buttonPagination, rows, currentPage);
-        let currentBtn = document.querySelector(".movieInformation__reviewsPagination button.active");
-        currentBtn.classList.remove("active");
-    });
-    return button;
-}*/
-
-displayMovieReviews(reviewsList, rows, currentPage);
+displayMovieReviews(rows, currentPage);
