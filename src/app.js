@@ -7,7 +7,6 @@ import { marked } from "marked";
 import getMovieReviews from "./getMovieReviews.js";
 import paginateReviews from "./paginateReviews.js"
 import cmsAdapterReviews from "./cmsAdapterReviews.js";
-//import Test from "supertest/lib/test.js";
 import { builder } from "./buildReviewBody.js";
 import { parser as reviewParser } from "./postReviewParser.js";
 import { postRequest } from "./reviewPostFunction.js";
@@ -89,6 +88,22 @@ app.get("/newsevents", async (request, response) => {
   renderPage(response, "newsevents");
 });
 
+//get reviews for a movie
+app.get("/api/movies/:movieId", async (request, response) => {
+  try {
+    const reviewsData = await getMovieReviews((request.params.movieId), cmsAdapterReviews);
+    const reviewArray = await paginateReviews (reviewsData, request.query.page, request.query.limit);
+
+    if (reviewArray.length > 1) {
+      response.status(200).json(reviewArray);
+    } else {
+      response.sendStatus(404);
+    };
+  } catch (error) {
+    response.sendStatus(404);
+  };
+});
+
 app.post("/api/movies/review", (request, response) => {
   //Extracts URL-Query string to object
   const reviewAtributes = reviewParser(request);
@@ -104,22 +119,6 @@ app.post("/api/movies/review", (request, response) => {
 
   //request the post command with url and json-string.
   postRequest(url, jsonData, response);
-});
-
-//get reviews for a movie
-app.get("/api/movies/:movieId", async (request, response) => {
-  try {
-    const reviewsData = await getMovieReviews((request.params.movieId), cmsAdapterReviews);
-    const reviewArray = await paginateReviews (reviewsData, request.query.page, request.query.limit);
-
-    if (reviewArray.length > 1) {
-      response.status(200).json(reviewArray);
-    } else {
-      response.sendStatus(404);
-    };
-  } catch (error) {
-    response.sendStatus(404);
-  };
 });
 
 app.use("/static", express.static("./static"));
