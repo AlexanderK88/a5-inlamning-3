@@ -23,7 +23,7 @@ describe("renderMovieScreenings", () => {
     renderMovieScreenings(mockMovieData);
     const listItem = document.querySelector("li");
 
-    expect(listItem.textContent).toContain("Theater: Stora salongenStart time: 19:00, Feb 6, 2026");
+    expect(listItem.textContent).toContain("Theater: Stora salongenStart time: 19:00, 6 Feb 2026");
   });
 
   test("if no screening, h2 with text appears", () => {
