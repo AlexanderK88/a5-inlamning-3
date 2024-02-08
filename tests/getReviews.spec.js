@@ -1,4 +1,4 @@
-import getMovieReviews from "../src/showReviews";
+import getMovieReviews from "../src/getMovieReviews";
 
 describe("getMovieReviews()", () => {    
     test("excludes a review with verified == false", async () => {

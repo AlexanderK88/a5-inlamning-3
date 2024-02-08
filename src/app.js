@@ -2,7 +2,7 @@ import express from "express";
 import { engine } from "express-handlebars";
 import { getMovie, getMovies } from "./movies.js";
 import { marked } from "marked";
-import getMovieReviews from "./showReviews.js";
+import getMovieReviews from "./getMovieReviews.js";
 import cmsAdapterReviews from "./cmsAdapterReviews.js";
 //import Test from "supertest/lib/test.js";
 
@@ -53,7 +53,7 @@ app.get("/newsevents", async (request, response) => {
 });
 
 //get reviews for a movie
-app.get("/api/reviews/:movieId", async (request, response, /*next*/) => {
+app.get("/api/movies/:movieId", async (request, response, /*next*/) => {
   try {
     const reviewsData = await getMovieReviews((request.params.movieId), cmsAdapterReviews);
 
@@ -78,11 +78,12 @@ app.get("/api/reviews/:movieId", async (request, response, /*next*/) => {
       total
     };
 
+    //prepare response array
     const reviews = reviewsData.slice(startIndex, endIndex)
-    reviews.push(pagination);
+    const reviewArray = [{data: reviews}, {meta: pagination}];
 
-    if (reviews.length > 1) {
-      response.status(200).json(reviews);
+    if (reviewArray.length > 1) {
+      response.status(200).json(reviewArray);
     } else {
       response.sendStatus(404);
     }

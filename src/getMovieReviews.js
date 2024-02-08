@@ -42,7 +42,7 @@ export default async function getMovieReviews(id, cmsAdapterReviews) {
     //prepare reviews for right content & format
     const preparedReviews = reviews.data.map((obj) => {
         if (obj.attributes.author === null) {
-            obj.attributes.author = "Anonymous"
+            obj.attributes.author = "Anonymous";
         }
         return {
             id: obj.id,

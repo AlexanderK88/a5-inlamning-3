@@ -1,7 +1,7 @@
 import { expect, test } from '@jest/globals';
 import request from 'supertest';
 import app from '../src/app';
-import getMovieReviews from "../src/showReviews";
+import getMovieReviews from "../src/getMovieReviews";
 
 //OBS: Does not test when total > pageSize
 
