@@ -23,6 +23,7 @@ export default async function paginateReviews(reviewsData, requestedPage, reques
 
     //prepare response array
     const reviews = reviewsData.slice(startIndex, endIndex);
+
     //to keep control over the response meta data
     const reviewArray = [{ data: reviews }, { meta: pagination }];
     return reviewArray;
