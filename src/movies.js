@@ -71,6 +71,6 @@ export async function averageRating(id) {
   if (newArray.length < 13) {
     return OMDB_payload.imdbRating;
   } else {
-    return averageRatingValue;
+    return skitkul;
   }
 }
