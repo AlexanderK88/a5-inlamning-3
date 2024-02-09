@@ -62,5 +62,15 @@ export async function averageRating(id) {
     const ratingValues = item.rating;
     return ratingValues;
   });
-  return averageRatingValue;
+  const imdbMovieID = newArray[0].imdbId;
+  const OMDB_rating = await fetch(
+    "https://www.omdbapi.com/?apikey=bf65b015&i=" + imdbMovieID
+  );
+  const OMDB_payload = await OMDB_rating.json();
+
+  if (averageRatingValue.length < 13) {
+    return OMDB_payload.imdbRating;
+  } else {
+    return averageRatingValue;
+  }
 }
