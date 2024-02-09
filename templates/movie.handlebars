@@ -1,4 +1,5 @@
 <script src="/static/individualScreenings.js" type="module" defer></script>
+<script src="/static/reviewsForMovie.js" type="module" defer></script>
 <section class="movieInformation">
   <div class="movieInformation__container">
     {{#if movie.image}}
@@ -13,12 +14,13 @@
       <ul class="movieInformation__list">
       </ul>
     </div>
-  {{> postreview}}
-    <a class="movieInformation__link" href="/movies">Back to homepage</a>
     <div class="movieInformation__reviewsContainer">
+      <h2 class="movieInformation__reviewsHeading">Reviews</h2>
       <div class="movieInformation__oneReview"></div>
       <div class="movieInformation__reviewsArrows"></div>
       <div class="movieInformation__reviewsPagination"></div>
     </div>
+  {{> postreview}}
+    <a class="movieInformation__link" href="/movies">Back to homepage</a>
   </div>
 </section>

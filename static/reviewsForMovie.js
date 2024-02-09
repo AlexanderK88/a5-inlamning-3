@@ -34,7 +34,7 @@ async function displayMovieReviews(rows, page) {
             return;
         };
         let oneReview = document.createElement("p");
-        oneReview.classList.add("movieInformation__oneReviewRating");
+        oneReview.classList.add("movieInformation__oneReviewOpinion");
         oneReview.textContent = (`Rating: ${review.rating} -- ${review.comment} -- Author: ${review.author}`);
         reviewsList.appendChild(oneReview);
     };
@@ -76,7 +76,7 @@ function prevNextButtons(reviewsPageCount, page) {
 
     if (currentPage === reviewsPageCount) {
         prev.textContent = ("<");
-        prev.classList.add("movieInformation__reviewsPrev");
+        prev.classList.add("movieInformation__reviewsPrevNext");
         prev.addEventListener("click", function () {
             currentPage = page - 1;
             displayMovieReviews(rows, currentPage);
@@ -85,7 +85,7 @@ function prevNextButtons(reviewsPageCount, page) {
 
     } else if (currentPage === 1) {
         next.textContent = (">");
-        next.classList.add("movieInformation__reviewsNext");
+        next.classList.add("movieInformation__reviewsPrevNext");
         next.addEventListener("click", function () {
             currentPage = page + 1;
             displayMovieReviews(rows, currentPage);
@@ -94,13 +94,13 @@ function prevNextButtons(reviewsPageCount, page) {
 
     } else {
         prev.textContent = ("<");
-        prev.classList.add("movieInformation__reviewsPrev");
+        prev.classList.add("movieInformation__reviewsPrevNext");
         prev.addEventListener("click", function () {
             currentPage = page - 1;
             displayMovieReviews(rows, currentPage);
         });
         next.textContent = (">");
-        next.classList.add("movieInformation__reviewsNext");
+        next.classList.add("movieInformation__reviewsPrevNext");
         next.addEventListener("click", function () {
             currentPage = page + 1;
             displayMovieReviews(rows, currentPage);
