@@ -112,7 +112,7 @@ app.post("/api/movies/review", (request, response) => {
 
 app.get("/api/movies/rating/:id", async (req, res) => {
   const data = await averageRating(req.params.id);
-  res.json(data);
+  res.send(data);
 });
 
 app.use("/static", express.static("./static"));

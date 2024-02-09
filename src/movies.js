@@ -86,6 +86,6 @@ export async function averageRating(id) {
   if (newArray.length < 5) {
     return OMDB_payload.imdbRating;
   } else {
-    return averageValue;
+    return averageValue.toFixed(1);
   }
 }
