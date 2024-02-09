@@ -8,8 +8,8 @@ export default function renderMovieScreenings(movieScreenings) {
 
       const timeOptions = { hour: "2-digit", minute: "2-digit", hour12: false, timeZone: "UTC" };
       const dateOptions = { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" };
-      const time = new Intl.DateTimeFormat("default", timeOptions).format(date);
-      const formattedDate = new Intl.DateTimeFormat("default", dateOptions).format(date);
+      const time = new Intl.DateTimeFormat("en-US", timeOptions).format(date);
+      const formattedDate = new Intl.DateTimeFormat("en-US", dateOptions).format(date);
 
       let theaterText = document.createElement("p");
       theaterText.textContent = `Theater: ${screening.room}`;
