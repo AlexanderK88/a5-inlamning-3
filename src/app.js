@@ -104,7 +104,7 @@ app.post("/api/movies/review", (request, response) => {
       verified = "false";
     }
   } catch (err) {
-    console.log(err);
+    console.log("no jwt");
   }
   //Extracts URL-Query string to object
   const reviewAtributes = reviewParser(request, verified);
@@ -153,23 +153,6 @@ app.post("/api/login", (request, response) => {
       ok: false,
     });
     console.log("Not ok");
-  }
-});
-
-app.get("/api/protected", (request, response) => {
-  const authHeader = request.headers.authorization;
-  const token = authHeader?.slice(7);
-
-  try {
-    const payload = jsonwebtoken.verify(token, JWT_SECRET);
-    response.status(200).json({
-      hello: payload.username,
-      someSecretData: "Superhämligt",
-    });
-  } catch (err) {
-    response.status(401).json({
-      error: "Not Allowed",
-    });
   }
 });
 

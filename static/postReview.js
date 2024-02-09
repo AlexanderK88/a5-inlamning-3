@@ -35,8 +35,6 @@ postBtn.addEventListener("click", async () => {
   data.append("rating", rating);
   data.append("author", nameOfAuthor);
 
-  console.log(data);
-
   const response = await fetch(`/api/movies/review`, {
     method: "POST",
     headers: {
@@ -57,8 +55,6 @@ async function run() {
   const credentials = `${username}:${password}`;
   const b64credentials = btoa(credentials);
 
-  console.log(b64credentials);
-
   const loginRes = await fetch("/api/login", {
     method: "POST",
     headers: {
@@ -66,13 +62,7 @@ async function run() {
     },
   });
   const loginPayload = await loginRes.json();
-
-  const response = await fetch("/api/protected", {
-    headers: {
-      Authorization: "Bearer " + loginPayload.token,
-    },
-  });
-  if (response.ok) {
+  if (loginRes.ok) {
     hideLogin();
     token = loginPayload.token;
   }
