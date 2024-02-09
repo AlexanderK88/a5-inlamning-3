@@ -92,12 +92,14 @@ app.get("/newsevents", async (request, response) => {
 app.get("/api/movies/:movieId", async (request, response) => {
   try {
     const reviewsData = await getMovieReviews((request.params.movieId), cmsAdapterReviews);
-    const reviewArray = await paginateReviews (reviewsData, request.query.page, request.query.limit);
+    const reviewArray = await paginateReviews(reviewsData, request.query.page, request.query.limit);
 
     if (reviewArray.length > 1) {
-      response.status(200).json(reviewArray);
+      response.status(200)
+      .json(reviewArray);
     } else {
-      response.sendStatus(404);
+      response.sendStatus(404)
+        .json({ message: error.message });
     };
   } catch (error) {
     response.sendStatus(404);
