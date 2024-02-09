@@ -8,7 +8,11 @@ import { builder } from "./buildReviewBody.js";
 import { parser as reviewParser } from "./postReviewParser.js";
 import { postRequest } from "./reviewPostFunction.js";
 import cmsAdapter from "./cmsAdapterScreenings.js";
-import { login } from "./auth.js"
+import { login, loginVerify } from "./auth.js"
+import dotenv from 'dotenv'
+import cookieParser from 'cookie-parser';
+
+dotenv.config()
 
 const app = express();
 app.engine("handlebars", engine());
@@ -17,6 +21,7 @@ app.set("views", "./templates");
 
 //used for POST request.
 app.use(express.json());
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 const menu = [
@@ -86,12 +91,13 @@ app.get("/newsevents", async (request, response) => {
   renderPage(response, "newsevents");
 });
 
-app.post("/api/movies/review", (request, response) => {
+app.post("/api/movies/review", loginVerify, (request, response) => {
+
   //Extracts URL-Query string to object
   const reviewAtributes = reviewParser(request);
   console.log(reviewAtributes);
   // Convert the JavaScript object to a JSON string
-  const jsonData = JSON.stringify(builder(reviewAtributes)) + "\n";
+  const jsonData = JSON.stringify(builder(reviewAtributes, request.jwtIsVerified)) + "\n";
 
   //Print out the json-string to make sure its correct.
   console.log("review attr: ", jsonData);

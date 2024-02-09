@@ -1,11 +1,11 @@
-export function builder(attributes) {
+export function builder(attributes, verified = false) {
   const date = new Date().toISOString();
   const body = {
     data: {
       comment: "mats test test test",
       rating: 2,
       author: "mats",
-      verified: false,
+      verified: verified,
       movie: "1",
       createdAt: date,
       updatedAt: date,
