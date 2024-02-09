@@ -8,6 +8,7 @@ import { builder } from "./buildReviewBody.js";
 import { parser as reviewParser } from "./postReviewParser.js";
 import { postRequest } from "./reviewPostFunction.js";
 import cmsAdapter from "./cmsAdapterScreenings.js";
+import { login } from "./auth.js"
 
 const app = express();
 app.engine("handlebars", engine());
@@ -101,6 +102,16 @@ app.post("/api/movies/review", (request, response) => {
   //request the post command with url and json-string.
   postRequest(url, jsonData, response);
 });
+
+app.get("/login", async (request, response) => {
+  try {
+    renderPage(response, "login")
+  } catch (error) {
+    response.json({msg:error.message})
+  } 
+})
+
+app.post("/login", login)
 
 app.use("/static", express.static("./static"));
 app.use("/public", express.static("./public"));

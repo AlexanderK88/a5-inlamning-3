@@ -20,3 +20,20 @@
     text-align: center;
   }
 }
+
+.login {
+  text-decoration: none;
+  margin-bottom: 50px;
+}
+
+.login h2 {
+  justify-self: center;
+  color: white;
+  font-size: 38px;
+
+  &:hover {
+    color: rgb(177, 177, 177);
+  }
+}
+
+

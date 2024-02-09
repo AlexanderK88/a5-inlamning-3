@@ -71,10 +71,7 @@ main {
   z-index: 50;
   opacity: 0;
   visibility: hidden;
-  transition:
-    background-color 0.5s,
-    opacity 0.5s,
-    visibility 0.5s;
+  transition: background-color 0.5s, opacity 0.5s, visibility 0.5s;
 }
 .header__hamburgerMenuContainer.header__hamburgerMenuContainer--open {
   opacity: 1;
@@ -107,9 +104,7 @@ main {
   box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.4);
   opacity: 0;
   transform: scale(0.8);
-  transition:
-    opacity 0.2s ease 0.1s,
-    transform 0.2s ease 0.1s;
+  transition: opacity 0.2s ease 0.1s, transform 0.2s ease 0.1s;
 }
 .header__hamburgerMenu.header__hamburgerMenu--active {
   opacity: 1;
@@ -236,6 +231,20 @@ main {
 .frontpage__title {
   margin-bottom: 5px;
   text-align: center;
+}
+
+.login {
+  text-decoration: none;
+  margin-bottom: 50px;
+}
+
+.login h2 {
+  justify-self: center;
+  color: white;
+  font-size: 38px;
+}
+.login h2:hover {
+  color: rgb(177, 177, 177);
 }
 
 .sponsors {
@@ -601,10 +610,10 @@ main {
   border: 1px solid white;
 }
 .review .review__rating[aria-valuenow="1"] span:nth-child(1),
-.review .review__rating[aria-valuenow="2"] span:nth-child(-n + 2),
-.review .review__rating[aria-valuenow="3"] span:nth-child(-n + 3),
-.review .review__rating[aria-valuenow="4"] span:nth-child(-n + 4),
-.review .review__rating[aria-valuenow="5"] span:nth-child(-n + 5) {
+.review .review__rating[aria-valuenow="2"] span:nth-child(-n+2),
+.review .review__rating[aria-valuenow="3"] span:nth-child(-n+3),
+.review .review__rating[aria-valuenow="4"] span:nth-child(-n+4),
+.review .review__rating[aria-valuenow="5"] span:nth-child(-n+5) {
   background-image: url("../static/assets/film-solid-rated.svg");
 }
 .review__title {
@@ -642,4 +651,37 @@ main {
   font-weight: 700;
   padding: 3px;
   margin: 10px 0;
+}
+
+.login-form {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.login-form input[type=text],
+.login-form input[type=password] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.login-form button {
+  width: 100%;
+  padding: 10px;
+  background-color: #800020;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.login-form button:hover {
+  background-color: #45a049;
 }
