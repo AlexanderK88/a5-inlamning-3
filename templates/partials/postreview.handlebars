@@ -1,10 +1,11 @@
 
+<script src="../../static/postReview.js" type="module" defer></script>
 
 <section class="review">
-  <div class="review__login" style="display: none;">
-    <input type="text" name="username" placeholder="Enter Username" id="username">
-    <input type="text" name="password" placeholder="Enter Password" id="password">
-    <button id="loginBtn">Login</button>
+  <div class="review__login">
+    <input name="username" placeholder="username">
+    <input name="password" placeholder="password">
+    <button id="loginbtn">Login</button>
   </div>
   <div class="review__title"><p>Add a review for {{movie.title}}</p></div>
 {{!-- <form action="/movies/:movieId/test" method="post" class="review__form" id="reviewForm"> --}}
@@ -41,5 +42,3 @@
   </form>
   
 </section>
-
-<script src="../../static/postReview.js" type="module" defer></script>

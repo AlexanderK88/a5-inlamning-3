@@ -9,6 +9,7 @@ document.querySelectorAll(".movieGrade").forEach((span) => {
 
 const postBtn = document.querySelector("#postBtn");
 const reviewForm = document.getElementById("reviewForm");
+let token = "";
 
 postBtn.addEventListener("click", async () => {
   event.preventDefault();
@@ -38,6 +39,46 @@ postBtn.addEventListener("click", async () => {
 
   const response = await fetch(`/api/movies/review`, {
     method: "POST",
+    headers: {
+      Authorization: "Bearer " + token,
+    },
     body: data,
   });
 });
+
+const loginbtn = document.querySelector("#loginbtn");
+loginbtn.addEventListener("click", async () => {
+  run();
+});
+
+async function run() {
+  const username = document.querySelector('input[name="username"]').value;
+  const password = document.querySelector('input[name="password"]').value;
+  const credentials = `${username}:${password}`;
+  const b64credentials = btoa(credentials);
+
+  console.log(b64credentials);
+
+  const loginRes = await fetch("/api/login", {
+    method: "POST",
+    headers: {
+      Authorization: "Basic " + b64credentials,
+    },
+  });
+  const loginPayload = await loginRes.json();
+
+  const response = await fetch("/api/protected", {
+    headers: {
+      Authorization: "Bearer " + loginPayload.token,
+    },
+  });
+  if (response.ok) {
+    hideLogin();
+    token = loginPayload.token;
+  }
+}
+
+function hideLogin() {
+  const loginBox = document.querySelector(".review__login");
+  loginBox.style.display = "none";
+}

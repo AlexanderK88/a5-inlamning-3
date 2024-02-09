@@ -1,6 +1,6 @@
 import xss from "xss";
 
-export function parser(request) {
+export function parser(request, veri) {
   const id = request.body.id;
   const comment = xss(request.body.comment);
   const rating = request.body.rating;
@@ -15,6 +15,7 @@ export function parser(request) {
     updatedAt: "2024-02-05T16:45:17.078Z",
     createdBy: author,
     updatedBy: author,
+    verified: veri,
   };
 
   return data;

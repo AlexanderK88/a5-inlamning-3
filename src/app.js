@@ -8,6 +8,11 @@ import { builder } from "./buildReviewBody.js";
 import { parser as reviewParser } from "./postReviewParser.js";
 import { postRequest } from "./reviewPostFunction.js";
 import cmsAdapter from "./cmsAdapterScreenings.js";
+import jsonwebtoken from "jsonwebtoken";
+
+const USERNAME = "admin";
+const PASSWORD = "pass";
+const JWT_SECRET = "hundenhemmahetermolleocharsjuaergammal";
 
 const app = express();
 app.engine("handlebars", engine());
@@ -86,8 +91,23 @@ app.get("/newsevents", async (request, response) => {
 });
 
 app.post("/api/movies/review", (request, response) => {
+  const authHeader = request.headers.authorization;
+  // console.log(authHeader);
+  const token = authHeader?.slice(7);
+  // console.log('token', token);
+  let verified = "false";
+  try {
+    if (jsonwebtoken.verify(token, JWT_SECRET)) {
+      verified = "true";
+      console.log("Verified", verified);
+    } else {
+      verified = "false";
+    }
+  } catch (err) {
+    console.log(err);
+  }
   //Extracts URL-Query string to object
-  const reviewAtributes = reviewParser(request);
+  const reviewAtributes = reviewParser(request, verified);
   console.log(reviewAtributes);
   // Convert the JavaScript object to a JSON string
   const jsonData = JSON.stringify(builder(reviewAtributes)) + "\n";
@@ -99,7 +119,58 @@ app.post("/api/movies/review", (request, response) => {
   const url = "https://plankton-app-xhkom.ondigitalocean.app/api/reviews";
 
   //request the post command with url and json-string.
-  postRequest(url, jsonData, response);
+  // postRequest(url, jsonData, response);
+});
+
+app.post("/api/login", (request, response) => {
+  const authHeader = request.headers.authorization;
+  const b64credentials = authHeader?.slice(6);
+  let username, password;
+
+  try {
+    const credentials = atob(b64credentials);
+    [username, password] = credentials.split(":");
+  } catch (err) {
+    username = "";
+    password = "";
+  }
+
+  if (username == USERNAME && password == PASSWORD) {
+    const jwt = jsonwebtoken.sign(
+      {
+        username: username,
+        role: "superuser",
+      },
+      JWT_SECRET,
+    );
+    response.status(200).json({
+      ok: true,
+      token: jwt,
+    });
+    console.log("ok");
+  } else {
+    response.status(401).json({
+      ok: false,
+    });
+    console.log("Not ok");
+  }
+});
+
+app.get("/api/protected", (request, response) => {
+  const authHeader = request.headers.authorization;
+  const token = authHeader?.slice(7);
+
+  try {
+    const payload = jsonwebtoken.verify(token, JWT_SECRET);
+    response.status(200).json({
+      hello: payload.username,
+      someSecretData: "Superhämligt",
+    });
+  } catch (err) {
+    response.status(401).json({
+      error: "Not Allowed",
+    });
+  }
 });
 
 app.use("/static", express.static("./static"));
