@@ -68,7 +68,7 @@ export async function averageRating(id) {
   );
   const OMDB_payload = await OMDB_rating.json();
 
-  if (averageRatingValue.length < 13) {
+  if (newArray.length < 13) {
     return OMDB_payload.imdbRating;
   } else {
     return averageRatingValue;
