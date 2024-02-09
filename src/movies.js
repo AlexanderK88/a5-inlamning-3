@@ -47,3 +47,20 @@ export async function getMovieScreenings(cmsAdapter, id) {
     console.log(error.message);
   }
 }
+export async function averageRating(id) {
+  const response = await fetch(
+    API_BASE + "/reviews?populate=movie&filters[movie]=" + id
+  );
+  const payload = await response.json();
+  const newArray = payload.data.map((object) => {
+    return {
+      rating: object.attributes.rating,
+      imdbId: object.attributes.movie.data.attributes.imdbId,
+    };
+  });
+  const averageRatingValue = newArray.map((item) => {
+    const ratingValues = item.rating;
+    return ratingValues;
+  });
+  return averageRatingValue;
+}
