@@ -51,16 +51,19 @@ async function prepareReviews(reviews) {
             ...obj.attributes,
         };
     });
-    return preparedReviews;
+
+    const reviewsData = preparedReviews
+    .filter(review => review.verified !== false);
+
+   return reviewsData;
 };
 
 //get reviews & meta data
 export default async function getMovieReviews(id, cmsAdapterReviews) {
     const payload = await cmsAdapterReviews.loadMovieReviews(id);
     const reviews = await allReviews(id, payload);
-    const preparedReviews = await prepareReviews(reviews);
+    //const preparedReviews = await prepareReviews(reviews);
+    const reviewsData = await prepareReviews(reviews);
 
-    const reviewsData = preparedReviews
-        .filter(review => review.verified !== false);
     return reviewsData;
 };
