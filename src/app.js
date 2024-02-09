@@ -96,30 +96,32 @@ app.post("/api/movies/review", (request, response) => {
   const token = authHeader?.slice(7);
   // console.log('token', token);
   let verified = "false";
+
   try {
     if (jsonwebtoken.verify(token, JWT_SECRET)) {
       verified = "true";
-      console.log("Verified", verified);
+
+      //Extracts URL-Query string to object
+      const reviewAtributes = reviewParser(request, verified);
+      console.log(reviewAtributes);
+      // Convert the JavaScript object to a JSON string
+      const jsonData = JSON.stringify(builder(reviewAtributes)) + "\n";
+
+      //Print out the json-string to make sure its correct.
+      console.log("review attr: ", jsonData);
+
+      //Url to DB for post-function
+      const url = "https://plankton-app-xhkom.ondigitalocean.app/api/reviews";
+
+      //request the post command with url and json-string.
+      // postRequest(url, jsonData, response);
     } else {
-      verified = "false";
+      response.status(401).send("Not authorised");
     }
   } catch (err) {
     console.log("no jwt");
+    response.status(401).send("Not authorised");
   }
-  //Extracts URL-Query string to object
-  const reviewAtributes = reviewParser(request, verified);
-  console.log(reviewAtributes);
-  // Convert the JavaScript object to a JSON string
-  const jsonData = JSON.stringify(builder(reviewAtributes)) + "\n";
-
-  //Print out the json-string to make sure its correct.
-  console.log("review attr: ", jsonData);
-
-  //Url to DB for post-function
-  const url = "https://plankton-app-xhkom.ondigitalocean.app/api/reviews";
-
-  //request the post command with url and json-string.
-  // postRequest(url, jsonData, response);
 });
 
 app.post("/api/login", (request, response) => {
