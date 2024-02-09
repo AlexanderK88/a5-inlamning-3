@@ -62,6 +62,21 @@ export async function averageRating(id) {
     const ratingValues = item.rating;
     return ratingValues;
   });
+  const changeList = averageRatingValue.filter((object) => object !== null);
+
+  async function calculateAverage(array) {
+    let sum = 0;
+    let arraylength = array.length;
+
+    array.forEach(async (obj) => {
+      sum += obj;
+      return sum;
+    });
+    const test = sum / arraylength;
+    return test;
+  }
+  const averageValue = await calculateAverage(changeList);
+
   const imdbMovieID = newArray[0].imdbId;
   const OMDB_rating = await fetch(
     "https://www.omdbapi.com/?apikey=bf65b015&i=" + imdbMovieID
@@ -71,6 +86,6 @@ export async function averageRating(id) {
   if (newArray.length < 13) {
     return OMDB_payload.imdbRating;
   } else {
-    return skitkul;
+    return averageValue;
   }
 }
