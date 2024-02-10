@@ -5,7 +5,7 @@ import getRecentScreenings from "./getRecentScreenings.js";
 import { getMovie, getMovies, getMovieScreenings } from "./movies.js";
 import { marked } from "marked";
 import getMovieReviews from "./getMovieReviews.js";
-import paginateReviews from "./paginateReviews.js"
+import paginateReviews from "./paginateReviews.js";
 import cmsAdapterReviews from "./cmsAdapterReviews.js";
 import { builder } from "./buildReviewBody.js";
 import { parser as reviewParser } from "./postReviewParser.js";
@@ -91,19 +91,17 @@ app.get("/newsevents", async (request, response) => {
 //get reviews for a movie
 app.get("/api/movies/:movieId", async (request, response) => {
   try {
-    const reviewsData = await getMovieReviews((request.params.movieId), cmsAdapterReviews);
+    const reviewsData = await getMovieReviews(request.params.movieId, cmsAdapterReviews);
     const reviewArray = await paginateReviews(reviewsData, request.query.page, request.query.limit);
 
     if (reviewArray.length > 1) {
-      response.status(200)
-      .json(reviewArray);
+      response.status(200).json(reviewArray);
     } else {
-      response.sendStatus(404)
-        .json({ message: error.message });
-    };
+      response.sendStatus(404).json({ message: error.message });
+    }
   } catch (error) {
     response.sendStatus(404);
-  };
+  }
 });
 
 app.post("/api/movies/review", (request, response) => {
@@ -112,7 +110,7 @@ app.post("/api/movies/review", (request, response) => {
   console.log(reviewAtributes);
   // Convert the JavaScript object to a JSON string
   const jsonData = JSON.stringify(builder(reviewAtributes)) + "\n";
-
+  // response.status(200).send('ok');
   //Print out the json-string to make sure its correct.
   console.log("review attr: ", jsonData);
 
