@@ -25,6 +25,7 @@ async function displayMovieReviews(rows, page) {
     reviewsList.textContent = "";
 
     let responseArray = await fetchMovieReviews(rows, page);
+    console.log(responseArray[1])
     let reviewsData = responseArray[0].data;
     let reviewsPageCount = responseArray[1].meta.pageCount;
 

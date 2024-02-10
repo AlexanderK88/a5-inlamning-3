@@ -233,6 +233,28 @@ main {
   text-align: center;
 }
 
+.login {
+  text-decoration: none;
+  margin-bottom: 50px;
+}
+
+.login {
+  width: 20vw;
+}
+
+.login button {
+  width: 100%;
+  padding: 10px;
+  background-color: #800020;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.login button:hover {
+  background-color: rgb(145, 9, 9);
+}
+
 .sponsors {
   background-color: #333333;
   display: flex;
@@ -657,4 +679,36 @@ main {
   font-weight: 700;
   padding: 3px;
   margin: 10px 0;
+}
+
+.login-form {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.login-form input[type=text] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.login-form button {
+  width: 100%;
+  padding: 10px;
+  background-color: #800020;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.login-form button:hover {
+  background-color: #45a049;
 }

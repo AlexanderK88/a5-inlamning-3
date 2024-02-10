@@ -4,6 +4,7 @@ import app from '../src/app';
 import getMovieReviews from "../src/getMovieReviews";
 
 //OBS: Does not test when total > pageSize
+const movieId = Math.floor(Math.random() * 5) + 1;
 
 describe("GET /api/reviews/:movieId", () => {
     test('should return max 5 revies and 1 pagination data-object', async () => {
@@ -26,7 +27,7 @@ describe("GET /api/reviews/:movieId", () => {
         };
 
         await getMovieReviews(3, cmsAdapterReviews)
-        request(app).get("/api/reviews/:movieId")
+        request(app).get(`/api/movies/${movieId}`)
             .query({ page: 1 })
             .query({ limit: 5 })
             .expect(200)
@@ -77,7 +78,7 @@ describe("GET /api/reviews/:movieId", () => {
         };
 
         await getMovieReviews(3, cmsAdapterReviews)
-        request(app).get("/api/reviews/:movieId")
+        request(app).get(`/api/movies/${movieId}`)
             .query({ page: 2 })
             .query({ limit: 5 })
             .expect(200)
