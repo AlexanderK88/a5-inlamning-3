@@ -16,9 +16,6 @@ export async function login(request, response) {
 
             //set cookie with token
             response.cookie('jwt', token, {httpOnly: true, maxAge: 15 * 60 * 1000})
-
-            console.log(username)
-            console.log(token)
             
             //Redirecting to other page
             response.redirect('/movies')
@@ -35,7 +32,6 @@ export async function login(request, response) {
 export async function loginVerify(request, response, next) {
     //get token
     const token = request.cookies.jwt
-    console.log(token)
     //if no token
     if(!token) {
         return response.status(403).json({ message: 'No token provided' });
