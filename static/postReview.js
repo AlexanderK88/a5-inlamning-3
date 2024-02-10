@@ -10,7 +10,7 @@ document.querySelectorAll(".movieGrade").forEach((span) => {
 const postBtn = document.querySelector("#postBtn");
 const reviewForm = document.getElementById("reviewForm");
 
-postBtn.addEventListener("click", async () => {
+postBtn.addEventListener("click", async (event) => {
   event.preventDefault();
   const reviewComment = document.querySelector("#reviewMsg").value;
   let revcom = reviewComment;
@@ -38,6 +38,10 @@ postBtn.addEventListener("click", async () => {
 
   const response = await fetch(`/api/movies/review`, {
     method: "POST",
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    credentials: 'include', // Add this line
     body: data,
   });
 });

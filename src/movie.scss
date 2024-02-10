@@ -47,4 +47,27 @@
       padding-bottom: 10px;
     }
   }
+
+  &__reviewsHeading {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    text-decoration: underline;
+  }
+
+&__oneReviewOpinion {
+  list-style: none;
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+&__reviewsPrevNext {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 5px;
+      border: 0;
+      font-size: large;
+      font-weight: 700;
+      padding: 3px;
+      margin: 10px 10px;
+}
 }

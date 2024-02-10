@@ -1,25 +1,32 @@
 import jwt from 'jsonwebtoken'
 
-export async function login(request, response, next) {
+export async function login(request, response) {
     try {
+        //Get username
         const {username} = request.body
 
+        //If no username this doesnt run
         if(username) {
 
+            //just giving id a value 
             const id = new Date().getDate()
 
+            //creating a token that is valid for 15 mins
             const token = jwt.sign({id, username}, process.env.JWT_SECRET, {expiresIn:'15min'}) 
 
             //set cookie with token
-
             response.cookie('jwt', token, {httpOnly: true, maxAge: 15 * 60 * 1000})
 
             console.log(username)
             console.log(token)
             
+            //Redirecting to other page
             response.redirect('/movies')
+        }else {
+            response.status(400).json({msg: 'Username is required'});
         }
-        
+   
+    //Error
     } catch (error) {
         response.status(400).json({msg: error.message})
     }

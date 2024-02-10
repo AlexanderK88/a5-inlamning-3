@@ -26,13 +26,20 @@
   margin-bottom: 50px;
 }
 
-.login h2 {
-  justify-self: center;
+.login{
+  width: 20vw;
+}
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: $colorThree;
   color: white;
-  font-size: 38px;
-
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  
   &:hover {
-    color: rgb(177, 177, 177);
+    background-color: rgb(145, 9, 9)
   }
 }
 

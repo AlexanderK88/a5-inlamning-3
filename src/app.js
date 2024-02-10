@@ -4,6 +4,9 @@ import cmsAdapterRecentScreenings from "./cmsAdapterRecentScreenings.js";
 import getRecentScreenings from "./getRecentScreenings.js";
 import { getMovie, getMovies, getMovieScreenings } from "./movies.js";
 import { marked } from "marked";
+import getMovieReviews from "./getMovieReviews.js";
+import paginateReviews from "./paginateReviews.js"
+import cmsAdapterReviews from "./cmsAdapterReviews.js";
 import { builder } from "./buildReviewBody.js";
 import { parser as reviewParser } from "./postReviewParser.js";
 import { postRequest } from "./reviewPostFunction.js";
@@ -89,6 +92,24 @@ app.get("/aboutus", async (request, response) => {
 
 app.get("/newsevents", async (request, response) => {
   renderPage(response, "newsevents");
+});
+
+//get reviews for a movie
+app.get("/api/movies/:movieId", async (request, response) => {
+  try {
+    const reviewsData = await getMovieReviews((request.params.movieId), cmsAdapterReviews);
+    const reviewArray = await paginateReviews(reviewsData, request.query.page, request.query.limit);
+
+    if (reviewArray.length = 1) {
+      response.status(200)
+      .json(reviewArray);
+    } else {
+      response.sendStatus(404)
+        .json({ message: error.message });
+    };
+  } catch (error) {
+    response.sendStatus(404);
+  };
 });
 
 app.post("/api/movies/review", loginVerify, (request, response) => {
