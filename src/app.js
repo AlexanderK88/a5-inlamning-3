@@ -100,7 +100,7 @@ app.get("/api/movies/:movieId", async (request, response) => {
     const reviewsData = await getMovieReviews((request.params.movieId), cmsAdapterReviews);
     const reviewArray = await paginateReviews(reviewsData, request.query.page, request.query.limit);
 
-    if (reviewArray.length = 1) {
+    if (reviewArray.length > 1) {
       response.status(200)
       .json(reviewArray);
     } else {
