@@ -55,8 +55,11 @@ No request body is required for this endpoint.
 This endpoint returns a JSON array of movie screenings. Each object in the array represents a movie screening and contains the following properties:
 
 **start_time:** String (ISO 8601 date-time format). The start time of the screening. This is the time when the movie will be shown in the theater.
+
 **start_date:** String (ISO 8601 date-time format). The start date of the screening. This is the date when the movie will be shown in the theater.
+
 **room:** String. The name of the room where the screening will take place.
+
 **title:** String The name of the movie that will be shown
 
 The returned screenings are filtered to only include screenings that are in the future, and they are ordered by the start_time in ascending order.
@@ -88,22 +91,34 @@ This endpoint returns a JSON array of reviews for one movie and meta data for th
 
 **data for one review:**
 **id:** Integer. The unique identifier of the review.
+
 **comment:** String. Comment from the reviewer or “No comment”.
+
 **rating:** Integer or string. The reviewer’s rating or “No rating”.
+
 **author:** String. Signed by reviewer or “Anonymous”.
+
 **verified:** Value. true or null.
+
 **createdAt:** String (ISO 8601 date-time format). The date and time when the review was created in the database. This can be useful for administrative purposes.
+
 **updatedAt:** String (ISO 8601 date-time format). The date and time when the review was last updated in the database. This can be useful for tracking changes to the review details.
 
 ### the meta object:
+
 **meta:**
 
 **page:** Integer. The requested page number.
+
 **limit:** Integer. The requested number of reviews/page.
+
 **pageCount:** Integer. Total number of pages.
+
 **startIndex:** Integer. 0 for the page.
+
 **endIndex:** Integer. Same as the limit.
-total. Integer. Total number of reviews for all pages.
+
+**total:** Integer. Total number of reviews for all pages.
 
 The returned reviews are filtered to not include reviews that have been set to verified == false.
 
