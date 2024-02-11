@@ -2,7 +2,12 @@ import express from "express";
 import { engine } from "express-handlebars";
 import cmsAdapterRecentScreenings from "./cmsAdapterRecentScreenings.js";
 import getRecentScreenings from "./getRecentScreenings.js";
-import { getMovie, getMovies, getMovieScreenings } from "./movies.js";
+import {
+  getMovie,
+  getMovies,
+  getMovieScreenings,
+  averageRating,
+} from "./movies.js";
 import { marked } from "marked";
 import getMovieReviews from "./getMovieReviews.js";
 import paginateReviews from "./paginateReviews.js"
@@ -73,7 +78,10 @@ app.get("/newsevents", async (request, response) => {
 
 app.get("/api/movies/:id/screenings", async (request, response) => {
   try {
-    const movieScreenings = await getMovieScreenings(cmsAdapter, request.params.id);
+    const movieScreenings = await getMovieScreenings(
+      cmsAdapter,
+      request.params.id
+    );
     response.json(movieScreenings);
   } catch (error) {
     console.log(error.message);
@@ -121,6 +129,15 @@ app.post("/api/movies/review", (request, response) => {
 
   //request the post command with url and json-string.
   postRequest(url, jsonData, response);
+});
+
+app.get("/api/movies/rating/:id", async (req, res) => {
+  try {
+    const data = await averageRating(req.params.id);
+    res.send(data);
+  } catch (error) {
+    console.log(error.message);
+  }
 });
 
 app.use("/static", express.static("./static"));

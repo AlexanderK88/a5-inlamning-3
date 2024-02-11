@@ -47,3 +47,49 @@ export async function getMovieScreenings(cmsAdapter, id) {
     console.log(error.message);
   }
 }
+export async function averageRating(id) {
+  try {
+    const response = await fetch(
+      API_BASE + "/reviews?populate=movie&filters[movie]=" + id
+    );
+    const payload = await response.json();
+    const newArray = payload.data.map((object) => {
+      return {
+        rating: object.attributes.rating,
+        imdbId: object.attributes.movie.data.attributes.imdbId,
+      };
+    });
+    const averageRatingValue = newArray.map((item) => {
+      const ratingValues = item.rating;
+      return ratingValues;
+    });
+    const changeList = averageRatingValue.filter((object) => object !== null);
+
+    async function calculateAverage(array) {
+      let sum = 0;
+      let arraylength = array.length;
+
+      array.forEach(async (obj) => {
+        sum += obj;
+        return sum;
+      });
+      const test = sum / arraylength;
+      return test;
+    }
+    const averageValue = await calculateAverage(changeList);
+
+    const imdbMovieID = newArray[0].imdbId;
+    const OMDB_rating = await fetch(
+      "https://www.omdbapi.com/?apikey=bf65b015&i=" + imdbMovieID
+    );
+    const OMDB_payload = await OMDB_rating.json();
+
+    if (newArray.length < 5) {
+      return OMDB_payload.imdbRating;
+    } else {
+      return averageValue.toFixed(1);
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
+}
