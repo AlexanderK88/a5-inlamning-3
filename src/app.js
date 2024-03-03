@@ -10,12 +10,13 @@ import {
 } from "./movies.js";
 import { marked } from "marked";
 import getMovieReviews from "./getMovieReviews.js";
-import paginateReviews from "./paginateReviews.js"
+import paginateReviews from "./paginateReviews.js";
 import cmsAdapterReviews from "./cmsAdapterReviews.js";
 import { builder } from "./buildReviewBody.js";
 import { parser as reviewParser } from "./postReviewParser.js";
 import { postRequest } from "./reviewPostFunction.js";
 import cmsAdapter from "./cmsAdapterScreenings.js";
+import cmsAdapterTEST1 from "./csmAdapterRatings.js";
 
 const app = express();
 app.engine("handlebars", engine());
@@ -99,19 +100,24 @@ app.get("/newsevents", async (request, response) => {
 //get reviews for a movie
 app.get("/api/movies/:movieId", async (request, response) => {
   try {
-    const reviewsData = await getMovieReviews((request.params.movieId), cmsAdapterReviews);
-    const reviewArray = await paginateReviews(reviewsData, request.query.page, request.query.limit);
+    const reviewsData = await getMovieReviews(
+      request.params.movieId,
+      cmsAdapterReviews
+    );
+    const reviewArray = await paginateReviews(
+      reviewsData,
+      request.query.page,
+      request.query.limit
+    );
 
     if (reviewArray.length > 1) {
-      response.status(200)
-      .json(reviewArray);
+      response.status(200).json(reviewArray);
     } else {
-      response.sendStatus(404)
-        .json({ message: error.message });
-    };
+      response.sendStatus(404).json({ message: error.message });
+    }
   } catch (error) {
     response.sendStatus(404);
-  };
+  }
 });
 
 app.post("/api/movies/review", (request, response) => {
@@ -133,8 +139,8 @@ app.post("/api/movies/review", (request, response) => {
 
 app.get("/api/movies/rating/:id", async (req, res) => {
   try {
-    const data = await averageRating(req.params.id);
-    res.send(data);
+    const data = await averageRating(req.params.id, cmsAdapterTEST1);
+    res.json(data);
   } catch (error) {
     console.log(error.message);
   }
