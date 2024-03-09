@@ -158,5 +158,24 @@ Response
 When the correct json is sent, the response will be status 200.
 
 If there is a problem with writing the information to the db it will return status 500.
-
 And if the response is not ok it will return a status 400 error..
+
+# Get Ratings for a Movie
+
+### Endpoint
+GET /api//reviews?populate=movie&filters[movie]= This endpoint gets the data for all the movie-ratings.
+
+### URL Parameters
+ID is needed to get all the rating-data for a specific movie.
+
+### URL Query string
+Populate=movie is added, to add data on the reviews and filters[movie]= (+id) is to sort out reviews for specific movie.
+
+### Headers
+No headers are required for this.
+
+### Request body
+No requests is needed.
+
+### Resonse
+A JSON array is sent as a response to our request. We get review-data on for instance id’s, comments, ratings, authors and more.
