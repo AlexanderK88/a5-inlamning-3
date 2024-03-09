@@ -1,4 +1,5 @@
 import fetch from "node-fetch";
+// import cmsAdapterTEST1 from "./csmAdapterRatings";
 
 const API_BASE = "https://plankton-app-xhkom.ondigitalocean.app/api";
 
@@ -49,7 +50,7 @@ export async function getMovieScreenings(cmsAdapter, id) {
 }
 export async function averageRating(id) {
   try {
-    const response = await fetch(
+    /*     const response = await fetch(
       API_BASE + "/reviews?populate=movie&filters[movie]=" + id
     );
     const payload = await response.json();
@@ -58,8 +59,10 @@ export async function averageRating(id) {
         rating: object.attributes.rating,
         imdbId: object.attributes.movie.data.attributes.imdbId,
       };
-    });
-    const averageRatingValue = newArray.map((item) => {
+    }); */
+    const payload_from_CMS = cmsAdapterTEST1.loadAllRatings();
+
+    const averageRatingValue = payload_from_CMS.map((item) => {
       const ratingValues = item.rating;
       return ratingValues;
     });
