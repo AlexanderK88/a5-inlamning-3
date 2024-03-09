@@ -1,7 +1,18 @@
+import { jest } from "@jest/globals";
 import { getMovieScreenings } from "../src/movies";
 
 describe("getMovieScreenings", () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.clearAllTimers();
+  });
+
   test("No old screenings should appear", async () => {
+    jest.setSystemTime(new Date("2024-02-12T01:33:00.000Z"));
+
     const screenings = await getMovieScreenings(
       {
         loadAllMovieScreenings: async () => ({
@@ -27,12 +38,14 @@ describe("getMovieScreenings", () => {
           ],
         }),
       },
-      3,
+      3
     );
     expect(screenings.length).toEqual(1);
   });
 
   test("Dates should be in order", async () => {
+    jest.setSystemTime(new Date("2024-02-12T01:33:00.000Z"));
+
     const screenings = await getMovieScreenings(
       {
         loadAllMovieScreenings: async () => ({
@@ -67,7 +80,7 @@ describe("getMovieScreenings", () => {
           ],
         }),
       },
-      3,
+      3
     );
     expect(screenings[0].start_time).toContain("2024-03-20T12:00:00.000Z");
     expect(screenings[2].start_time).toContain("2025-06-15T21:00:00.000Z");
@@ -80,12 +93,14 @@ describe("getMovieScreenings", () => {
           data: [],
         }),
       },
-      3,
+      3
     );
     expect(screenings).toEqual([]);
   });
 
   test("should correctly transform data", async () => {
+    jest.setSystemTime(new Date("2024-02-12T01:33:00.000Z"));
+
     const screenings = await getMovieScreenings(
       {
         loadAllMovieScreenings: async () => ({
@@ -102,7 +117,7 @@ describe("getMovieScreenings", () => {
           ],
         }),
       },
-      3,
+      3
     );
     expect(screenings).toEqual([
       {

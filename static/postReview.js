@@ -40,4 +40,8 @@ postBtn.addEventListener("click", async () => {
     method: "POST",
     body: data,
   });
+  if (response.ok) {
+    const reviewComment = (document.querySelector("#reviewMsg").value = "");
+    const nameOfAuthor = (document.querySelector("#reviewName").value = "");
+  }
 });
