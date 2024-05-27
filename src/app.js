@@ -2,12 +2,7 @@ import express from "express";
 import { engine } from "express-handlebars";
 import cmsAdapterRecentScreenings from "./cmsAdapterRecentScreenings.js";
 import getRecentScreenings from "./getRecentScreenings.js";
-import {
-  getMovie,
-  getMovies,
-  getMovieScreenings,
-  averageRating,
-} from "./movies.js";
+import { getMovie, getMovies, getMovieScreenings } from "./movies.js";
 import { marked } from "marked";
 import getMovieReviews from "./getMovieReviews.js";
 import paginateReviews from "./paginateReviews.js";
@@ -16,6 +11,8 @@ import { builder } from "./buildReviewBody.js";
 import { parser as reviewParser } from "./postReviewParser.js";
 import { postRequest } from "./reviewPostFunction.js";
 import cmsAdapter from "./cmsAdapterScreenings.js";
+import loadAllRatings from "./cmsAdapterRatings.js";
+import Ratings from "./checkRatings.js";
 
 const app = express();
 app.engine("handlebars", engine());
@@ -99,8 +96,15 @@ app.get("/newsevents", async (request, response) => {
 //get reviews for a movie
 app.get("/api/movies/:movieId", async (request, response) => {
   try {
-    const reviewsData = await getMovieReviews(request.params.movieId, cmsAdapterReviews);
-    const reviewArray = await paginateReviews(reviewsData, request.query.page, request.query.limit);
+    const reviewsData = await getMovieReviews(
+      request.params.movieId,
+      cmsAdapterReviews
+    );
+    const reviewArray = await paginateReviews(
+      reviewsData,
+      request.query.page,
+      request.query.limit
+    );
 
     if (reviewArray.length > 1) {
       response.status(200).json(reviewArray);
@@ -130,12 +134,9 @@ app.post("/api/movies/review", (request, response) => {
 });
 
 app.get("/api/movies/rating/:id", async (req, res) => {
-  try {
-    const data = await averageRating(req.params.id);
-    res.send(data);
-  } catch (error) {
-    console.log(error.message);
-  }
+  const dataFromAPI = await loadAllRatings(req.params.id);
+  const averageRatingValue = await Ratings(dataFromAPI);
+  res.json(averageRatingValue);
 });
 
 app.use("/static", express.static("./static"));
